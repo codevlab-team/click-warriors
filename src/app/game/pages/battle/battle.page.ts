@@ -10,7 +10,7 @@ export class BattlePage implements OnInit {
   yellowScore = 0;
   purpleScore = 0;
 
-  countDown = 10;
+  countDown = 5;
   everybodyJoined = false;
 
   constructor() {}
@@ -22,6 +22,6 @@ export class BattlePage implements OnInit {
       interval(1000)
         .pipe(takeWhile(() => this.countDown > 0))
         .subscribe(() => this.countDown--);
-    }, 7000);
+    }, 4000);
   }
 }

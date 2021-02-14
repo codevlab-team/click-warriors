@@ -15,6 +15,11 @@
 </app-navbar>
 
 <div class="container">
+  <p class="mb-4">
+    <span class="mr-1">La partida inicia en</span>
+    <span class="font-bold">0:{{countDown}}</span>
+  </p>
+
   <div class="grid grid-cols-1 gap-x-6 lg:grid-cols-2">
     <div
       class="h-full max-h-screen overflow-y-auto bg-white rounded-lg shadow-xl dark:bg-gray-800"
@@ -28,10 +33,14 @@
             class="mr-3"
           />
           <h2 class="text-3xl font-bold tracking-widest uppercase font-display">
-            Los amarillos
+            Les amarillos
           </h2>
         </div>
         <span class="text-gray-400"> {{teamYellow.length}} / 20 </span>
+      </div>
+
+      <div class="px-6">
+        <button class="btn btn-success">Unirme</button>
       </div>
 
       <div role="table" class="p-6 font-semibold">
@@ -79,11 +88,16 @@
             class="mr-3"
           />
           <h2 class="text-3xl font-bold tracking-widest uppercase font-display">
-            Los morados
+            Les morados
           </h2>
         </div>
         <span class="text-gray-400"> {{teamPurple.length}} / 20 </span>
       </div>
+
+      <div class="px-6">
+        <button class="btn btn-success">Unirme</button>
+      </div>
+
       <div role="table" class="p-6 font-semibold">
         <div role="rowgroup">
           <div

@@ -1,45 +1,59 @@
-<div class="h-full overflow-hidden">
-  <div class="container h-full">
-    <app-scoreboard
+<div class="container h-full">
+  <!-- <app-scoreboard
       [yellowScore]="yellowScore"
       [purpleScore]="purpleScore"
-    ></app-scoreboard>
+    ></app-scoreboard> -->
 
-    <div class="grid items-center grid-cols-2 pt-16 justify-items-center">
+  <div
+    class="grid items-center grid-cols-1 gap-12 pt-16 md:grid-cols-2 justify-items-center"
+  >
+    <div class="flex flex-col items-center">
+      <div class="flex flex-col items-center mb-6">
+        <img
+          src="https://img.icons8.com/emoji/48/000000/t-shirt-emoji.png"
+          class="mr-3"
+        />
+        <h2
+          class="mb-3 text-3xl font-bold tracking-widest uppercase font-display"
+        >
+          Les amarillos
+        </h2>
+        <div
+          class="relative w-full h-3 max-w-xl mb-12 overflow-hidden rounded-full"
+        >
+          <div class="absolute w-full h-full bg-gray-200"></div>
+          <div class="absolute h-full bg-green-500" style="width: 80%"></div>
+        </div>
+      </div>
       <button
-        class="relative transition-transform duration-300 ease-in transform rounded-full select-none player bg-gradient-to-br from-yellow-300 to-yellow-600 w-96 h-96 ring-8 ring-yellow-400 ring-opacity-40 focus:outline-none hover:-rotate-45"
+        class="relative transition-transform duration-300 ease-in transform rounded-full select-none player bg-gradient-to-br from-yellow-300 to-yellow-600 w-44 h-44 lg:w-96 lg:h-96 ring-8 ring-yellow-400 ring-opacity-40 focus:outline-none hover:-rotate-45"
       >
-        <img
-          src="https://img.icons8.com/color/96/000000/sleepy-eyes.png"
-          class="absolute transform top-1/4 left-2/4 -translate-x-2/4"
-        />
-        <img
-          src="https://img.icons8.com/emoji/48/000000/nose-emoji.png"
-          class="absolute transform top-2/4 left-2/4 -translate-x-2/4"
-        />
-        <img
-          src="https://img.icons8.com/dusk/64/000000/demon-mouth.png"
-          class="absolute transform top-3/4 left-2/4 -translate-x-2/4"
-        />
         <div
           class="absolute top-0 w-full h-full bg-yellow-300 rounded-full ping"
         ></div>
       </button>
+    </div>
+    <div class="flex flex-col items-center">
+      <div class="flex flex-col items-center mb-6">
+        <img
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAFN0lEQVRoge2ZXWwUVRTH//fOzHZnd/vBliKyDZRSFIuIAZNCBFOVqJTiR3QhEA0PIEkx0ZgoRn1ZX0hQEowJEArBBB8o7AOBAhUeSOXLYooBsQ0UiW2hWLCUbne7Ozs7c48vItruV4eh+LC/x7nnnPv/7/2YM1kgR44cOR4mzI4i1dXVskdJrNETSvOx5uZL6WKXLFpUzhB9UR3n2xUMBs37nduygR3vHJ0KQywnUFXb0I/PXIycLpW5gMzyzXypKORgzjsccj9jIJNMry7i3oh5p0BHWDYFw1P5z16vdM1vZWBnDUJDXcPizjExsM3f6FNkaSsBS+/m98Sv4sTAfjxWBDxCr+NmohtRcxA6aRBEcEoqVJ6PCYoPIfkwfr1NeK7oDfjypt0tSyB2kENat7rhpRsPzMA2f6NPlqUWAKX/fk4QaLq9G4NGH6oKF2Oqc2bS/GtaB86EGuGRvagpXgUGPjzkumGY8+qCS3tsN7B9basihW8dJ2BBsvFBsx/H+/dCE1GUOqejQp2NcXIJAIaQ0YersV/QpV1CHlfx/LhlKJLHJ5+I0BILofr9ppp4NrrkbA3wyK1vUokHgALJi8XFq3AhcgqdWjuuaR3/zYeEMmclZnsWQpU8qSdimKcWYjOAddnoymoFdqxoehug77KJBQCDdPQl/kDUDINAcEn5GK9MgsIc2ZYAI6xe01CzK2NcpoD6lYefZmCnQXBlPbs9aJxo4eqGJa3pgtIa2On/3gtZnCOgzF5t2cGAThh87prgK/2pYkZcA3chECOJdiUTr5tZna9RkawmAWVCNncHAoGUOlMO7FzZ9CkYvZZsLJaIWhKZjlQ1GdgS3+Wq9anypGQP62o/eU+Q8WWB7E1qMKwNwO3ItyQ0FWEtBLcj+e10PX7lhVnT5oR+6jh5dvjYCIEBf8BzLX7p65MDB6Tz4R9AECMKmsIEEdmhGwBARBA0si0iCJyPnMCpgYO8M962KeAPjHA4YgWa25v16idquqMiXNurd/LeRBfGK4/Cye9dQuF4CC6HG5yl3IGjQpCJIT0MT17hP88GjD9xcuAAurXLULnbnKw+Xrdp/4aWjAYA4NyVlgsvV7wZhMze6tN7PFe1ixBkwKtMhMRkxPQhOBUVEk+aPmpMYSBuaHDn5UMXcVwcOoOzg0cRNQdR4ijt9aGiamvTxmPJcjO+B+pqP9rQrXWsj4mIpHAHyp2zMIlX3J7gmhThTJpihwFBZldftNd1k7pKOmLnoIs4VMltTlAmb/n2yJYP0uVm3APbDm36rFyZ4y1Xn6x3QE1ciZ3HDer4gjMpZId4AGCMD/Tgt8/bh1ogQzHK1Mr9M5xzJ2YSD4yyG/XP/1AtKZZf3Xroq731K460MaDSuux7ENC+dk/NzHW1Hy83mLuxvjGQ9T1t+YNm54ojHQRMt5o/jMvv7qmZYSXR8jVCRFl3slkUy77LG4b1e5Axt+VcG2vdz0VuZ3dq+bVuyQCBGADV6qRJULevbVWsJFoysNkfdCLFS9AqZqQ3zWdaaiwZKFa9tn/cSAmytI0sGdBiMfsO8N9InBVYybN2iB28MHPQ6GBcGrsVgLDfAMQYbiGJmO0GTD6GBgDT/hVgfOwMELd/BZjAGB7iB7CFwMZwCxGs/VrpYGStnbBkgEP8b1bAUktsGmIjk+U2BrEAYHMATAUw2pZYB/A7QD8T+ClhmIesaLHlL6Z9/n1SRHFNMYU0mYACBlLBWSGR8AAAYzwCQSECizFgEArvKtRC3cuCy+77L6YcOXLkeLj8BXJc67NdLrRCAAAAAElFTkSuQmCC"
+          class="mr-3"
+        />
+        <h2
+          class="mb-3 text-3xl font-bold tracking-widest uppercase font-display"
+        >
+          Les morados
+        </h2>
+        <div
+          class="relative w-full h-3 max-w-xl mb-12 overflow-hidden rounded-full"
+        >
+          <div class="absolute w-full h-full bg-gray-200"></div>
+          <div class="absolute h-full bg-red-500" style="width: 10%"></div>
+        </div>
+      </div>
       <button
-        class="relative transition-transform duration-300 ease-in transform rounded-full select-none player bg-gradient-to-bl from-purple-300 to-purple-600 w-96 h-96 focus:outline-none ring-8 ring-purple-400 ring-opacity-40 hover:rotate-45"
+        class="relative transition-transform duration-300 ease-in transform rounded-full select-none player bg-gradient-to-bl from-purple-300 to-purple-600 w-44 h-44 lg:w-96 lg:h-96 focus:outline-none ring-8 ring-purple-400 ring-opacity-40 hover:rotate-45"
       >
-        <img
-          src="https://img.icons8.com/pastel-glyph/64/000000/sun-glasses--v2.png"
-          class="absolute transform top-1/4 left-2/4 -translate-x-2/4"
-        />
-        <img
-          src="https://img.icons8.com/emoji/48/000000/pig-nose-emoji.png"
-          class="absolute transform top-2/4 left-2/4 -translate-x-2/4"
-        />
-        <img
-          src="https://img.icons8.com/emoji/48/000000/mouth-emoji.png"
-          class="absolute transform top-3/4 left-2/4 -translate-x-2/4"
-        />
         <div
           class="fixed top-0 w-full h-full bg-purple-300 rounded-full ping"
         ></div>
