@@ -30,7 +30,9 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/public",
+              "src/public/favicon.ico",
+              "src/public/_redirects",
+              "src/public/web.config",
               "src/assets"
             ],
             "styles": [
