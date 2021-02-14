@@ -11,24 +11,56 @@
       Deporte y convivencia
     </a>
 
-    <div class="flex flex-col items-center w-full h-full shield">
-      <img
-        src="https://img.icons8.com/fluent/96/000000/viking-helmet.png"
-        class="w-16 h-16 mb-6"
-      />
+    <div
+      class="grid w-full h-full place-items-center"
+      [ngClass]="{ shield: !submittedOrPatched }"
+    >
+      <div
+        class="flex flex-col items-center justify-center"
+        *ngIf="submittedOrPatched && nickname; else createUser"
+      >
+        <img
+          src="https://img.icons8.com/fluent/96/000000/viking-helmet.png"
+          class="w-16 h-16 mb-6"
+        />
 
-      <input
-        type="text"
-        placeholder="Ingrese su nombre"
-        class="input dark:bg-gray-700"
-        [(ngModel)]="username"
-      />
+        <p class="text-2xl">👋 Hola, {{ nickname }}</p>
+      </div>
+
+      <ng-template #createUser>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="mb-36">
+          <div class="relative flex">
+            <input
+              type="text"
+              placeholder="Ingrese su nombre"
+              class="input dark:bg-gray-700"
+              formControlName="nickname"
+            />
+            <button
+              type="submit"
+              class="btn btn-success"
+              [disabled]="!userForm.valid"
+            >
+              Crear
+            </button>
+            <div
+              *ngIf="
+                userForm.controls.nickname.touched &&
+                userForm.controls.nickname.hasError('maxlength')
+              "
+              class="absolute left-0 w-full px-4 py-2 text-red-800 bg-red-300 -bottom-10"
+            >
+              El máximo de caracteres es 30
+            </div>
+          </div>
+        </form>
+      </ng-template>
     </div>
 
     <div class="flex flex-wrap justify-center">
       <button
         class="mb-6 mr-3 btn btn-primary"
-        [disabled]="!username"
+        [disabled]="!submittedOrPatched"
         (click)="onClickPlay()"
       >
         <svg
@@ -43,7 +75,7 @@
         </svg>
         Jugar
       </button>
-      <button class="mb-6 btn btn-warning" [disabled]="!username">
+      <button class="mb-6 btn btn-warning" [disabled]="!submittedOrPatched">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

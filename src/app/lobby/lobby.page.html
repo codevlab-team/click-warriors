@@ -6,11 +6,9 @@
       height="24"
       viewBox="0 0 24 24"
       fill="#fff"
-      class="mr-3"
     >
       <path d="M0 12l9-8v6h15v4h-15v6z" />
     </svg>
-    Regresar
   </a>
 </app-navbar>
 
@@ -40,7 +38,13 @@
       </div>
 
       <div class="px-6">
-        <button class="btn btn-success">Unirme</button>
+        <button
+          class="btn btn-success"
+          (click)="onClickJoin('yellow')"
+          [disabled]="userInTeamYellow"
+        >
+          Unirme
+        </button>
       </div>
 
       <div role="table" class="p-6 font-semibold">
@@ -57,7 +61,7 @@
         </div>
         <div role="rowgroup">
           <div
-            *ngFor="let player of teamYellow; let i = index"
+            *ngFor="let player of teamYellow; let i = index; trackBy: trackByPlayer"
             class="grid grid-cols-3 p-2 mb-3 rounded-lg shadow-md md:p-2"
             [ngClass]="{
               'bg-gray-100 dark:bg-gray-900': i % 2 === 0
@@ -95,7 +99,13 @@
       </div>
 
       <div class="px-6">
-        <button class="btn btn-success">Unirme</button>
+        <button
+          class="btn btn-success"
+          (click)="onClickJoin('purple')"
+          [disabled]="userInTeamPurple"
+        >
+          Unirme
+        </button>
       </div>
 
       <div role="table" class="p-6 font-semibold">
@@ -113,7 +123,7 @@
         <div role="rowgroup">
           <div
             role="row"
-            *ngFor="let player of teamPurple; let i = index"
+            *ngFor="let player of teamPurple; let i = index; trackBy: trackByPlayer"
             class="grid grid-cols-3 p-2 mb-3 rounded-lg shadow-md md:p-2"
             [ngClass]="{
               'bg-gray-100 dark:bg-gray-900': i % 2 === 0

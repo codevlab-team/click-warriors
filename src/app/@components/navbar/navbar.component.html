@@ -9,10 +9,15 @@
         src="https://img.icons8.com/emoji/48/000000/soccer-ball-emoji.png"
         class="mr-3"
       />
-      Deporte y convivencia
+      <span class="hidden md:inline"> Deporte y convivencia </span>
+      <span class="md:hidden">D y C </span>
     </a>
     <div class="flex items-center">
       <ng-content></ng-content>
+
+      <div class="ml-4">
+        {{ nickname }}
+      </div>
     </div>
   </div>
 </nav>
