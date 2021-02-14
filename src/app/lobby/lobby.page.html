@@ -1,0 +1,123 @@
+<app-navbar>
+  <a routerLink="/servers" class="btn btn-danger">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="#fff"
+      class="mr-3"
+    >
+      <path d="M0 12l9-8v6h15v4h-15v6z" />
+    </svg>
+    Regresar
+  </a>
+</app-navbar>
+
+<div class="container">
+  <div class="grid grid-cols-1 gap-x-6 lg:grid-cols-2">
+    <div
+      class="h-full max-h-screen overflow-y-auto bg-white rounded-lg shadow-xl dark:bg-gray-800"
+    >
+      <div
+        class="sticky top-0 flex items-center justify-between p-6 bg-white rounded-t-lg dark:bg-gray-800"
+      >
+        <div class="flex items-center">
+          <img
+            src="https://img.icons8.com/emoji/48/000000/t-shirt-emoji.png"
+            class="mr-3"
+          />
+          <h2 class="text-3xl font-bold tracking-widest uppercase font-display">
+            Los amarillos
+          </h2>
+        </div>
+        <span class="text-gray-400"> {{teamYellow.length}} / 20 </span>
+      </div>
+
+      <div role="table" class="p-6 font-semibold">
+        <div role="rowgroup">
+          <div
+            role="row"
+            class="grid grid-cols-3 p-0 py-4 text-gray-400 md:p-3"
+          >
+            <div role="columnheader" aria-sort="none">#</div>
+            <div role="columnheader" aria-sort="none" class="col-span-2">
+              Jugador
+            </div>
+          </div>
+        </div>
+        <div role="rowgroup">
+          <div
+            *ngFor="let player of teamYellow; let i = index"
+            class="grid grid-cols-3 p-2 mb-3 rounded-lg shadow-md md:p-2"
+            [ngClass]="{
+              'bg-gray-100 dark:bg-gray-900': i % 2 === 0
+            }"
+          >
+            <div class="flex items-center">{{i+1}}</div>
+            <div class="flex items-center col-span-2">
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAACIElEQVRYhe2Vz0tUURzFP9/3ZsZCZxp/L4IgFDeSFbVK+wm5LCGIcNkf0bJFK+mfaGtBYC2iXGSEuZc0SGkVhKg44yRB8969p8UMUeqoMz4LyrN899zz/Vzue+/AoQ71v8sa3bgy3ZFNK+oDiCy90Dm0+vWPAKxNt54I8Q8lbpmRqj6OMJ7GcXiv/fLa5wMD2JhpPeW8f2NwTBBuCnKCYmDBlexgYW6vmcFejZon45x/BtoyHEAQIuW9/ITmySQOUFrL38E4CbZl+E+ZhUBPqZi7nTgAxnUzxbvZJDkIhpMHQF3e73D6qiwwQ+o+AABbNuR3c8lLoKXkAeQnq3e8o6zimUwcINdWegx8QnI1TZJDLOaOlJ4kDmD9lAMLRjArAluuwsCBFQK5ETtPlDgAQHawMBe78CwwDr8NiYSNp8PUmeyljQ/1ZDbcBctTnS2ZsNwHUHaZha6rKxuNZv1V1V9Gb1sHUoEfFnYa1FFJsRXzzAahTbZcKLw/EIDSu/xNvB7IGKhujGWVd8iEF5VmNJgFu58bKj5PBGB9JteG5xHYDcCxTRFtkgNCGRN47uYvrhcaBvg20348cvFrAnpRfV8Mhkcspkhfax5a/VLLVjN0eaqzpezjl2b01D0cQAQGvY7oxdKr7ua6AZrS0ZgZ/dt1/94ZCAUDR5u/j9UNIDSKGv9P/CIDjdZaTNVawHFOTfQSoX2ON0/wcV8Zh/qn9QNzV8J6RaeCkwAAAABJRU5ErkJggg=="
+                class="mr-3"
+              />
+              {{player}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="h-full max-h-screen overflow-y-auto bg-white rounded-lg shadow-xl dark:bg-gray-800"
+    >
+      <div
+        class="sticky top-0 flex items-center justify-between p-6 bg-white rounded-t-lg dark:bg-gray-800"
+      >
+        <div class="flex items-center">
+          <img
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAFN0lEQVRoge2ZXWwUVRTH//fOzHZnd/vBliKyDZRSFIuIAZNCBFOVqJTiR3QhEA0PIEkx0ZgoRn1ZX0hQEowJEArBBB8o7AOBAhUeSOXLYooBsQ0UiW2hWLCUbne7Ozs7c48vItruV4eh+LC/x7nnnPv/7/2YM1kgR44cOR4mzI4i1dXVskdJrNETSvOx5uZL6WKXLFpUzhB9UR3n2xUMBs37nduygR3vHJ0KQywnUFXb0I/PXIycLpW5gMzyzXypKORgzjsccj9jIJNMry7i3oh5p0BHWDYFw1P5z16vdM1vZWBnDUJDXcPizjExsM3f6FNkaSsBS+/m98Sv4sTAfjxWBDxCr+NmohtRcxA6aRBEcEoqVJ6PCYoPIfkwfr1NeK7oDfjypt0tSyB2kENat7rhpRsPzMA2f6NPlqUWAKX/fk4QaLq9G4NGH6oKF2Oqc2bS/GtaB86EGuGRvagpXgUGPjzkumGY8+qCS3tsN7B9basihW8dJ2BBsvFBsx/H+/dCE1GUOqejQp2NcXIJAIaQ0YersV/QpV1CHlfx/LhlKJLHJ5+I0BILofr9ppp4NrrkbA3wyK1vUokHgALJi8XFq3AhcgqdWjuuaR3/zYeEMmclZnsWQpU8qSdimKcWYjOAddnoymoFdqxoehug77KJBQCDdPQl/kDUDINAcEn5GK9MgsIc2ZYAI6xe01CzK2NcpoD6lYefZmCnQXBlPbs9aJxo4eqGJa3pgtIa2On/3gtZnCOgzF5t2cGAThh87prgK/2pYkZcA3chECOJdiUTr5tZna9RkawmAWVCNncHAoGUOlMO7FzZ9CkYvZZsLJaIWhKZjlQ1GdgS3+Wq9anypGQP62o/eU+Q8WWB7E1qMKwNwO3ItyQ0FWEtBLcj+e10PX7lhVnT5oR+6jh5dvjYCIEBf8BzLX7p65MDB6Tz4R9AECMKmsIEEdmhGwBARBA0si0iCJyPnMCpgYO8M962KeAPjHA4YgWa25v16idquqMiXNurd/LeRBfGK4/Cye9dQuF4CC6HG5yl3IGjQpCJIT0MT17hP88GjD9xcuAAurXLULnbnKw+Xrdp/4aWjAYA4NyVlgsvV7wZhMze6tN7PFe1ixBkwKtMhMRkxPQhOBUVEk+aPmpMYSBuaHDn5UMXcVwcOoOzg0cRNQdR4ijt9aGiamvTxmPJcjO+B+pqP9rQrXWsj4mIpHAHyp2zMIlX3J7gmhThTJpihwFBZldftNd1k7pKOmLnoIs4VMltTlAmb/n2yJYP0uVm3APbDm36rFyZ4y1Xn6x3QE1ciZ3HDer4gjMpZId4AGCMD/Tgt8/bh1ogQzHK1Mr9M5xzJ2YSD4yyG/XP/1AtKZZf3Xroq731K460MaDSuux7ENC+dk/NzHW1Hy83mLuxvjGQ9T1t+YNm54ojHQRMt5o/jMvv7qmZYSXR8jVCRFl3slkUy77LG4b1e5Axt+VcG2vdz0VuZ3dq+bVuyQCBGADV6qRJULevbVWsJFoysNkfdCLFS9AqZqQ3zWdaaiwZKFa9tn/cSAmytI0sGdBiMfsO8N9InBVYybN2iB28MHPQ6GBcGrsVgLDfAMQYbiGJmO0GTD6GBgDT/hVgfOwMELd/BZjAGB7iB7CFwMZwCxGs/VrpYGStnbBkgEP8b1bAUktsGmIjk+U2BrEAYHMATAUw2pZYB/A7QD8T+ClhmIesaLHlL6Z9/n1SRHFNMYU0mYACBlLBWSGR8AAAYzwCQSECizFgEArvKtRC3cuCy+77L6YcOXLkeLj8BXJc67NdLrRCAAAAAElFTkSuQmCC"
+            class="mr-3"
+          />
+          <h2 class="text-3xl font-bold tracking-widest uppercase font-display">
+            Los morados
+          </h2>
+        </div>
+        <span class="text-gray-400"> {{teamPurple.length}} / 20 </span>
+      </div>
+      <div role="table" class="p-6 font-semibold">
+        <div role="rowgroup">
+          <div
+            role="row"
+            class="grid grid-cols-3 p-0 py-4 text-gray-400 md:p-3"
+          >
+            <div role="columnheader" aria-sort="none">#</div>
+            <div role="columnheader" aria-sort="none" class="col-span-2">
+              Jugador
+            </div>
+          </div>
+        </div>
+        <div role="rowgroup">
+          <div
+            role="row"
+            *ngFor="let player of teamPurple; let i = index"
+            class="grid grid-cols-3 p-2 mb-3 rounded-lg shadow-md md:p-2"
+            [ngClass]="{
+              'bg-gray-100 dark:bg-gray-900': i % 2 === 0
+            }"
+          >
+            <div class="flex items-center">{{i+1}}</div>
+            <div class="flex items-center col-span-2">
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAACJ0lEQVRYhe2VzUtUYRTGf+e9d1RorIiwRRCE4iayov6ACjIqSSFGymgzSkLtW7ZoJe0lzD4gMMaRQBPLXGT/giRBSqsgohYqFUzO3PdpMxiYQ/NxLSif5T3Pfc6Pc997XtjSlv53WbUv3k9PNPpc0ArgGqKF3gedX/4IwFBqcp8L3G2ZXTAIiyl5yT8JlbiRzpx+v2kAQ5enDjpvr4AdQLCuHBks4/3xvtGO+XIzXbnGbCpb5yImQBs1BwgEO+XceDaVrYsdYCWRvIjZfrCNmq9BAM0rYWN37ABIpwSFMpyRjPbYAWTWZBuPfr0MtCd2AJM+Ab4Mq0x83AQAZihvAoGMmdgBtkffRoF3QFTKYxAZWlSyKRs7QPdY96p532WwDPrlUxhEgiXnrKv/7rF87AAAfaMd807BEcwyGD+bGHlBplCIDqdHzr6pJLPqu2AwNZsM3fdWgIKvX7g+duJrtVl/VRVPYPjS8zaT2mU6BG43gIzPJs15p5n+kXOvNwVguGeqE9ktoK34qIAVz5DwFG9GQ3Ne7ubVzJmnsQDcS03vItBDmc4XT/rvdkEEBAbjq+bT1x53LFUNcCc1uTcMg5egFrCK/hgMj1h0Ck/2Zto/lLKVDB1MzSbD0E0DzRU3BxAOaJFFzx5debGtYoC6RG4A7ADlrd9SChBtuXw0UDEA8j3UsCfWYkxmZj2l6mGpQi6MjjaovkVeqgXAZOYTq29rydjSv60fhuy7nscn+ewAAAAASUVORK5CYII="
+                class="mr-3"
+              />
+              {{player}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-loader [visible]="loaderVisible"></app-loader>

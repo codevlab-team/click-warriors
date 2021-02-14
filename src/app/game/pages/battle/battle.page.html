@@ -1,0 +1,66 @@
+<div class="h-full overflow-hidden">
+  <div class="container h-full">
+    <app-scoreboard
+      [yellowScore]="yellowScore"
+      [purpleScore]="purpleScore"
+    ></app-scoreboard>
+
+    <div class="grid items-center grid-cols-2 pt-16 justify-items-center">
+      <button
+        class="relative transition-transform duration-300 ease-in transform rounded-full select-none player bg-gradient-to-br from-yellow-300 to-yellow-600 w-96 h-96 ring-8 ring-yellow-400 ring-opacity-40 focus:outline-none hover:-rotate-45"
+      >
+        <img
+          src="https://img.icons8.com/color/96/000000/sleepy-eyes.png"
+          class="absolute transform top-1/4 left-2/4 -translate-x-2/4"
+        />
+        <img
+          src="https://img.icons8.com/emoji/48/000000/nose-emoji.png"
+          class="absolute transform top-2/4 left-2/4 -translate-x-2/4"
+        />
+        <img
+          src="https://img.icons8.com/dusk/64/000000/demon-mouth.png"
+          class="absolute transform top-3/4 left-2/4 -translate-x-2/4"
+        />
+        <div
+          class="absolute top-0 w-full h-full bg-yellow-300 rounded-full ping"
+        ></div>
+      </button>
+      <button
+        class="relative transition-transform duration-300 ease-in transform rounded-full select-none player bg-gradient-to-bl from-purple-300 to-purple-600 w-96 h-96 focus:outline-none ring-8 ring-purple-400 ring-opacity-40 hover:rotate-45"
+      >
+        <img
+          src="https://img.icons8.com/pastel-glyph/64/000000/sun-glasses--v2.png"
+          class="absolute transform top-1/4 left-2/4 -translate-x-2/4"
+        />
+        <img
+          src="https://img.icons8.com/emoji/48/000000/pig-nose-emoji.png"
+          class="absolute transform top-2/4 left-2/4 -translate-x-2/4"
+        />
+        <img
+          src="https://img.icons8.com/emoji/48/000000/mouth-emoji.png"
+          class="absolute transform top-3/4 left-2/4 -translate-x-2/4"
+        />
+        <div
+          class="fixed top-0 w-full h-full bg-purple-300 rounded-full ping"
+        ></div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="countDown > 0"
+  class="fixed top-0 bottom-0 left-0 right-0 z-50 grid bg-black bg-opacity-80 counter place-items-center"
+>
+  <span
+    *ngIf="everybodyJoined; else waiting"
+    class="text-white text-9xl font-display"
+  >
+    {{countDown}}
+  </span>
+  <ng-template #waiting>
+    <span class="text-3xl text-white font-display">
+      Esparando que todos ingresen...
+    </span>
+  </ng-template>
+</div>

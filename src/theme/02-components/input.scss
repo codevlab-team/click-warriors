@@ -1,0 +1,18 @@
+.input {
+  @apply px-6 py-3;
+  @apply bg-gray-200;
+  @apply transform skew-x-1;
+  @apply border-4;
+  @apply border-gray-600;
+}
+
+.input:hover {
+  @apply ring-opacity-75;
+}
+
+.input:focus {
+  @apply outline-none;
+  @apply ring-4;
+  @apply ring-blue-400;
+  @apply ring-opacity-75;
+}

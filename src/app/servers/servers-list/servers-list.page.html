@@ -1,0 +1,86 @@
+<app-navbar>
+  <a routerLink="/" class="btn btn-danger">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="#fff"
+      class="mr-3"
+    >
+      <path d="M0 12l9-8v6h15v4h-15v6z" />
+    </svg>
+    Regresar
+  </a>
+</app-navbar>
+
+<div class="container">
+  <div
+    class="h-full max-h-screen overflow-y-auto bg-white rounded-lg shadow-xl dark:bg-gray-800"
+  >
+    <div
+      class="sticky top-0 flex items-center justify-between p-6 bg-white rounded-t-lg dark:bg-gray-800"
+    >
+      <div class="flex items-center">
+        <img
+          src="https://img.icons8.com/fluent/48/000000/server.png"
+          class="mr-3"
+        />
+        <h2 class="text-3xl font-bold tracking-widest uppercase font-display">
+          Lista de servidores
+        </h2>
+      </div>
+      <span class="text-gray-400"> {{servers.length}} </span>
+    </div>
+
+    <div role="table" class="p-6 font-semibold">
+      <div role="rowgroup">
+        <div role="row" class="grid grid-cols-6 p-0 py-4 text-gray-400 md:p-3">
+          <div role="columnheader" aria-sort="none">#</div>
+          <div role="columnheader" aria-sort="none">Nombre</div>
+          <div role="columnheader" aria-sort="none">Localización</div>
+          <div role="columnheader" aria-sort="none">Estado</div>
+          <div role="columnheader" aria-sort="none">Jugadores</div>
+          <div role="columnheader" aria-sort="none"></div>
+        </div>
+      </div>
+      <div role="rowgroup">
+        <div
+          *ngFor="let server of servers; let i = index"
+          class="grid grid-cols-6 p-2 mb-3 rounded-lg shadow-md bg-gray-50 dark:bg-gray-700 md:p-4"
+          role="row"
+        >
+          <div class="flex items-center">{{i+1}}</div>
+          <div class="flex items-center">{{server.name}}</div>
+          <div class="flex items-center">{{server.location}}</div>
+          <div class="flex items-center">
+            <span *ngIf="server.status; else inactive">
+              <div class="flex items-center">
+                <span class="relative flex w-3 h-3 mr-3">
+                  <span
+                    class="absolute inline-flex w-full h-full bg-green-400 rounded-full opacity-75 animate-ping"
+                  ></span>
+                  <span
+                    class="relative inline-flex w-3 h-3 bg-green-500 rounded-full"
+                  ></span>
+                </span>
+
+                Activo
+              </div>
+            </span>
+            <ng-template #inactive>
+              <span>Inactivo</span>
+            </ng-template>
+          </div>
+          <div class="flex items-center">
+            <span class="mr-1 text-gray-400"> {{server.players}} </span>
+            <span>/ {{server.playersLimit}} </span>
+          </div>
+          <div class="flex items-center">
+            <a routerLink="/lobby" class="btn btn-primary"> Jugar </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

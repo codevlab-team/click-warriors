@@ -1,0 +1,19 @@
+.ping {
+  z-index: -1;
+}
+
+.player:active .ping {
+  animation: ping 0.1s forwards;
+  z-index: -1;
+}
+
+@keyframes ping {
+  from {
+    transform: scale(0.25);
+    opacity: 1;
+  }
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}

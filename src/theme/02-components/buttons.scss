@@ -1,0 +1,94 @@
+.btn {
+  @apply inline-flex;
+  @apply items-center;
+  @apply justify-center;
+  @apply font-display;
+  @apply px-6 py-2;
+  @apply text-2xl;
+  @apply transform -skew-x-12 skew-y-1;
+  @apply text-white;
+  @apply bg-gradient-to-tr;
+  @apply from-gray-700;
+  @apply to-gray-300;
+  @apply shadow-xl;
+  @apply tracking-wider;
+  @apply transition-colors ease-in-out duration-300;
+}
+
+.btn:hover {
+  @apply from-gray-300;
+  @apply to-gray-700;
+}
+
+.btn:focus {
+  @apply outline-none;
+  @apply ring-4;
+  @apply ring-gray-500;
+  @apply ring-opacity-50;
+}
+
+.btn-primary {
+  @apply bg-gradient-to-tr;
+  @apply from-blue-700;
+  @apply to-blue-300;
+}
+
+.btn-primary:hover {
+  @apply from-blue-300;
+  @apply to-blue-700;
+}
+
+.btn-primary:focus {
+  @apply ring-blue-500;
+}
+
+.btn-success {
+  @apply bg-gradient-to-tr;
+  @apply from-green-700;
+  @apply to-green-300;
+}
+
+.btn-success:hover {
+  @apply from-green-300;
+  @apply to-green-700;
+}
+
+.btn-success:focus {
+  @apply ring-green-500;
+}
+
+.btn-warning {
+  @apply bg-gradient-to-tr;
+  @apply from-yellow-700;
+  @apply to-yellow-300;
+}
+
+.btn-warning:hover {
+  @apply from-yellow-300;
+  @apply to-yellow-700;
+}
+
+.btn-warning:focus {
+  @apply ring-yellow-500;
+}
+
+.btn-danger {
+  @apply bg-gradient-to-tr;
+  @apply from-red-700;
+  @apply to-red-300;
+}
+
+.btn-danger:hover {
+  @apply from-red-300;
+  @apply to-red-700;
+}
+
+.btn-danger:focus {
+  @apply ring-red-500;
+}
+
+.btn:disabled {
+  @apply opacity-25;
+  @apply pointer-events-none;
+  @apply cursor-not-allowed;
+}

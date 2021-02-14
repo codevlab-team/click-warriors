@@ -1,11 +1,20 @@
 module.exports = {
   purge: [],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
+    fontFamily: {
+      'display': ['Luckiest Guy', 'cursive'],
+      'body': ['Montserrat', 'sans-serif'],
+     },
+    container: {
+      center: true,
+      padding: '1.5rem',
+    },
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+    },
   },
   plugins: [],
 }
