@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
@@ -8,11 +8,11 @@ import { UsersService } from '../@core/services/users/users.service';
   templateUrl: './lobby.page.html',
   styleUrls: ['./lobby.page.scss'],
 })
-export class LobbyPage implements OnInit {
+export class LobbyPage implements OnInit, OnDestroy {
   teamYellow: string[] = [];
   teamPurple: string[] = [];
 
-  countDown = 30;
+  countdown = 30;
 
   userInTeamYellow = false;
   userInTeamPurple = false;
@@ -30,11 +30,10 @@ export class LobbyPage implements OnInit {
     this.teamPurple = ['José Velez', 'Pedro García', 'Sara Beltrán'];
 
     interval(1000)
-      .pipe(takeWhile(() => this.countDown > 0))
+      .pipe(takeWhile(() => this.countdown > 0))
       .subscribe(() => {
-        this.countDown--;
-
-        if (this.countDown === 0) {
+        this.countdown--;
+        if (this.countdown === 0) {
           // Si el usuario no eligió equipo, el sistema lo une automáticamente
           if (
             this.userInTeamYellow === false &&
@@ -43,10 +42,13 @@ export class LobbyPage implements OnInit {
             this.joinAutomatically();
           }
 
-          console.log(this.teamYellow, this.teamPurple);
           this.router.navigate(['/game/battle']);
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.countdown = 0;
   }
 
   onClickJoin(team: 'yellow' | 'purple'): void {

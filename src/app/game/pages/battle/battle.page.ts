@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
@@ -7,7 +7,7 @@ import { takeWhile } from 'rxjs/operators';
   templateUrl: './battle.page.html',
   styleUrls: ['./battle.page.scss'],
 })
-export class BattlePage implements OnInit {
+export class BattlePage implements OnInit, OnDestroy {
   readonly numberOfClicks = 20;
   readonly goalsToWin = 3;
   readonly stageEager = 4000;
@@ -21,7 +21,7 @@ export class BattlePage implements OnInit {
   yellowScore = 0;
   purpleScore = 0;
 
-  countDown = 10;
+  countdown = 10;
 
   everybodyJoined = false;
 
@@ -35,6 +35,10 @@ export class BattlePage implements OnInit {
       this.everybodyJoined = true;
       this.runCountdown();
     }, 4000);
+  }
+
+  ngOnDestroy(): void {
+    this.countdown = 0;
   }
 
   onClickYellow() {
@@ -69,8 +73,8 @@ export class BattlePage implements OnInit {
 
   private runCountdown(): void {
     interval(1000)
-      .pipe(takeWhile(() => this.countDown > 0))
-      .subscribe(() => this.countDown--);
+      .pipe(takeWhile(() => this.countdown > 0))
+      .subscribe(() => this.countdown--);
   }
 
   private updateTeamLife(clicks: number): number {
@@ -85,7 +89,7 @@ export class BattlePage implements OnInit {
     this.purpleClicks = 0;
 
     setTimeout(() => {
-      this.countDown = 5;
+      this.countdown = 5;
       this.goal = false;
       this.runCountdown();
     }, this.stageEager);
