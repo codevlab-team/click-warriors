@@ -8,7 +8,7 @@ import { takeWhile } from 'rxjs/operators';
   styleUrls: ['./battle.page.scss'],
 })
 export class BattlePage implements OnInit, OnDestroy {
-  readonly numberOfClicks = 20;
+  readonly numberOfClicks = 100;
   readonly goalsToWin = 3;
   readonly stageEager = 4000;
 
