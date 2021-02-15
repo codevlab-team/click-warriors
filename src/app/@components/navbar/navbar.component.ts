@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UsersService } from 'src/app/@core/services/users/users.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { UsersService } from 'src/app/@core/services/users/users.service';
 export class NavbarComponent implements OnInit {
   nickname = '';
 
-  constructor(private usersService: UsersService) {
+  constructor(private router: Router, private usersService: UsersService) {
     const user = this.usersService.user;
 
     if (user) {
@@ -19,4 +20,9 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  onClickLogout() {
+    this.usersService.removeUser();
+    this.router.navigate(['/']);
+  }
 }

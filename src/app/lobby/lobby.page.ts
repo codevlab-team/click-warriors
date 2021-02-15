@@ -43,10 +43,8 @@ export class LobbyPage implements OnInit {
             this.joinAutomatically();
           }
 
-          setTimeout(() => {
-            console.log(this.teamYellow, this.teamPurple);
-            this.router.navigate(['/game/battle']);
-          }, 1000);
+          console.log(this.teamYellow, this.teamPurple);
+          this.router.navigate(['/game/battle']);
         }
       });
   }
