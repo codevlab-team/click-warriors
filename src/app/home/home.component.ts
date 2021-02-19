@@ -43,6 +43,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/servers']);
   }
 
+  onClickAddServer(): void {
+    this.router.navigate(['/servers/add']);
+  }
+
   onSubmit() {
     this.submittedOrPatched = true;
     const rnd = Math.random().toString().substring(2, 6);

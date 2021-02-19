@@ -75,7 +75,11 @@
         </svg>
         Jugar
       </button>
-      <button class="mb-6 btn btn-warning" [disabled]="!submittedOrPatched">
+      <button
+        class="mb-6 btn btn-warning"
+        [disabled]="!submittedOrPatched"
+        (click)="onClickAddServer()"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

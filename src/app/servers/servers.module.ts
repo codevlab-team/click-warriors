@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 import { NavbarModule } from '../@components/navbar/navbar.module';
 import { ServersListPage } from './servers-list/servers-list.page';
 import { ServersRoutingModule } from './servers-routing.module';
+import { AddServerPage } from './add-server/add-server.page';
 
 @NgModule({
-  declarations: [ServersListPage],
+  declarations: [ServersListPage, AddServerPage],
   imports: [CommonModule, ServersRoutingModule, NavbarModule],
 })
 export class ServersModule {}

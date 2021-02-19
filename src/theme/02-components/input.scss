@@ -16,3 +16,13 @@
   @apply ring-blue-400;
   @apply ring-opacity-75;
 }
+
+.input-group {
+  @apply mb-4;
+}
+
+.input-label {
+  @apply mb-4;
+  @apply text-sm;
+  @apply font-bold;
+}
