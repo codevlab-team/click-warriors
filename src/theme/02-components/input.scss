@@ -18,11 +18,13 @@
 }
 
 .input-group {
-  @apply mb-4;
+  @apply mb-6;
+  @apply flex;
+  @apply flex-col;
 }
 
 .input-label {
-  @apply mb-4;
+  @apply mb-2;
   @apply text-sm;
   @apply font-bold;
 }

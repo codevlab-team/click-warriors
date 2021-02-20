@@ -1,0 +1,32 @@
+.selection-item {
+  &:focus {
+    @apply outline-none;
+  }
+
+  &:hover label {
+    @apply bg-gray-900;
+    @apply shadow-xl;
+  }
+
+  &:focus label {
+    @apply ring-4;
+    @apply ring-inset;
+    @apply ring-blue-300;
+  }
+
+  & > input[type="radio"]:checked + label {
+    @apply bg-gray-900;
+    @apply shadow-2xl;
+    @apply transform scale-x-125 rotate-6;
+    @apply transition ease-in-out duration-200;
+  }
+
+  label {
+    @apply grid;
+    @apply place-items-center;
+    @apply p-6;
+    @apply cursor-pointer;
+    @apply text-gray-100;
+    @apply bg-gray-600;
+  }
+}
