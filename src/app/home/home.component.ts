@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from '../@core/services/users/users.service';
+import { distinctName } from '../@core/utils';
 
 @Component({
   selector: 'app-home',
@@ -49,8 +50,7 @@ export class HomeComponent implements OnInit {
 
   onSubmit() {
     this.submittedOrPatched = true;
-    const rnd = Math.random().toString().substring(2, 6);
-    const nickname = `${this.nickname}_${rnd}`;
+    const nickname = distinctName(this.nickname);
     this.userForm.controls['nickname'].setValue(nickname);
     this.usersService.saveUser(this.userForm.value);
   }

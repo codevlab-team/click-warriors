@@ -1,15 +1,13 @@
 <app-navbar> </app-navbar>
 
-<div class="container">
+<div class="container pb-16">
   <p class="mb-4">
     <span class="mr-1">La partida inicia en</span>
-    <span class="font-bold">0:{{countdown}}</span>
+    <span class="font-bold">{{displayTime}}</span>
   </p>
 
   <div class="grid grid-cols-1 gap-x-6 lg:grid-cols-2">
-    <div
-      class="h-full max-h-screen overflow-y-auto bg-white rounded-lg shadow-xl dark:bg-gray-800"
-    >
+    <div class="h-full bg-white rounded-lg shadow-xl dark:bg-gray-800">
       <div
         class="sticky top-0 flex items-center justify-between p-6 bg-white rounded-t-lg dark:bg-gray-800"
       >
@@ -35,42 +33,47 @@
         </button>
       </div>
 
-      <div role="table" class="p-6 font-semibold">
-        <div role="rowgroup">
-          <div
-            role="row"
-            class="grid grid-cols-3 p-0 py-4 text-gray-400 md:p-3"
-          >
-            <div role="columnheader" aria-sort="none">#</div>
-            <div role="columnheader" aria-sort="none" class="col-span-2">
-              Jugador
+      <ng-container *ngIf="teamYellow.length; else haveNotJoin">
+        <div role="table" class="p-6 font-semibold">
+          <div role="rowgroup">
+            <div
+              role="row"
+              class="grid grid-cols-3 p-0 py-4 text-gray-400 md:p-3"
+            >
+              <div role="columnheader" aria-sort="none">#</div>
+              <div role="columnheader" aria-sort="none" class="col-span-2">
+                Jugador
+              </div>
             </div>
           </div>
-        </div>
-        <div role="rowgroup">
-          <div
-            *ngFor="let player of teamYellow; let i = index; trackBy: trackByPlayer"
-            class="grid grid-cols-3 p-2 mb-3 rounded-lg shadow-md md:p-2"
-            [ngClass]="{
+          <div role="rowgroup">
+            <div
+              *ngFor="let player of teamYellow; let i = index; trackBy: trackByPlayer"
+              class="grid grid-cols-3 p-2 mb-3 rounded-lg shadow-md md:p-2"
+              [ngClass]="{
               'bg-gray-100 dark:bg-gray-900': i % 2 === 0
             }"
-          >
-            <div class="flex items-center">{{i+1}}</div>
-            <div class="flex items-center col-span-2">
-              <img
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAACIElEQVRYhe2Vz0tUURzFP9/3ZsZCZxp/L4IgFDeSFbVK+wm5LCGIcNkf0bJFK+mfaGtBYC2iXGSEuZc0SGkVhKg44yRB8969p8UMUeqoMz4LyrN899zz/Vzue+/AoQ71v8sa3bgy3ZFNK+oDiCy90Dm0+vWPAKxNt54I8Q8lbpmRqj6OMJ7GcXiv/fLa5wMD2JhpPeW8f2NwTBBuCnKCYmDBlexgYW6vmcFejZon45x/BtoyHEAQIuW9/ITmySQOUFrL38E4CbZl+E+ZhUBPqZi7nTgAxnUzxbvZJDkIhpMHQF3e73D6qiwwQ+o+AABbNuR3c8lLoKXkAeQnq3e8o6zimUwcINdWegx8QnI1TZJDLOaOlJ4kDmD9lAMLRjArAluuwsCBFQK5ETtPlDgAQHawMBe78CwwDr8NiYSNp8PUmeyljQ/1ZDbcBctTnS2ZsNwHUHaZha6rKxuNZv1V1V9Gb1sHUoEfFnYa1FFJsRXzzAahTbZcKLw/EIDSu/xNvB7IGKhujGWVd8iEF5VmNJgFu58bKj5PBGB9JteG5xHYDcCxTRFtkgNCGRN47uYvrhcaBvg20348cvFrAnpRfV8Mhkcspkhfax5a/VLLVjN0eaqzpezjl2b01D0cQAQGvY7oxdKr7ua6AZrS0ZgZ/dt1/94ZCAUDR5u/j9UNIDSKGv9P/CIDjdZaTNVawHFOTfQSoX2ON0/wcV8Zh/qn9QNzV8J6RaeCkwAAAABJRU5ErkJggg=="
-                class="mr-3"
-              />
-              {{player}}
+            >
+              <div class="flex items-center">{{i+1}}</div>
+              <div class="flex items-center col-span-2">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAACIElEQVRYhe2Vz0tUURzFP9/3ZsZCZxp/L4IgFDeSFbVK+wm5LCGIcNkf0bJFK+mfaGtBYC2iXGSEuZc0SGkVhKg44yRB8969p8UMUeqoMz4LyrN899zz/Vzue+/AoQ71v8sa3bgy3ZFNK+oDiCy90Dm0+vWPAKxNt54I8Q8lbpmRqj6OMJ7GcXiv/fLa5wMD2JhpPeW8f2NwTBBuCnKCYmDBlexgYW6vmcFejZon45x/BtoyHEAQIuW9/ITmySQOUFrL38E4CbZl+E+ZhUBPqZi7nTgAxnUzxbvZJDkIhpMHQF3e73D6qiwwQ+o+AABbNuR3c8lLoKXkAeQnq3e8o6zimUwcINdWegx8QnI1TZJDLOaOlJ4kDmD9lAMLRjArAluuwsCBFQK5ETtPlDgAQHawMBe78CwwDr8NiYSNp8PUmeyljQ/1ZDbcBctTnS2ZsNwHUHaZha6rKxuNZv1V1V9Gb1sHUoEfFnYa1FFJsRXzzAahTbZcKLw/EIDSu/xNvB7IGKhujGWVd8iEF5VmNJgFu58bKj5PBGB9JteG5xHYDcCxTRFtkgNCGRN47uYvrhcaBvg20348cvFrAnpRfV8Mhkcspkhfax5a/VLLVjN0eaqzpezjl2b01D0cQAQGvY7oxdKr7ua6AZrS0ZgZ/dt1/94ZCAUDR5u/j9UNIDSKGv9P/CIDjdZaTNVawHFOTfQSoX2ON0/wcV8Zh/qn9QNzV8J6RaeCkwAAAABJRU5ErkJggg=="
+                  class="mr-3"
+                />
+                {{player}}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </ng-container>
+      <ng-template #haveNotJoin>
+        <p class="py-16 text-center">
+          😢 Todavía no se ha unido ningún jugador.
+        </p>
+      </ng-template>
     </div>
 
-    <div
-      class="h-full max-h-screen overflow-y-auto bg-white rounded-lg shadow-xl dark:bg-gray-800"
-    >
+    <div class="h-full bg-white rounded-lg shadow-xl dark:bg-gray-800">
       <div
         class="sticky top-0 flex items-center justify-between p-6 bg-white rounded-t-lg dark:bg-gray-800"
       >
@@ -96,38 +99,45 @@
         </button>
       </div>
 
-      <div role="table" class="p-6 font-semibold">
-        <div role="rowgroup">
-          <div
-            role="row"
-            class="grid grid-cols-3 p-0 py-4 text-gray-400 md:p-3"
-          >
-            <div role="columnheader" aria-sort="none">#</div>
-            <div role="columnheader" aria-sort="none" class="col-span-2">
-              Jugador
+      <ng-container *ngIf="teamPurple.length; else haveNotJoin">
+        <div role="table" class="p-6 font-semibold">
+          <div role="rowgroup">
+            <div
+              role="row"
+              class="grid grid-cols-3 p-0 py-4 text-gray-400 md:p-3"
+            >
+              <div role="columnheader" aria-sort="none">#</div>
+              <div role="columnheader" aria-sort="none" class="col-span-2">
+                Jugador
+              </div>
             </div>
           </div>
-        </div>
-        <div role="rowgroup">
-          <div
-            role="row"
-            *ngFor="let player of teamPurple; let i = index; trackBy: trackByPlayer"
-            class="grid grid-cols-3 p-2 mb-3 rounded-lg shadow-md md:p-2"
-            [ngClass]="{
+          <div role="rowgroup">
+            <div
+              role="row"
+              *ngFor="let player of teamPurple; let i = index; trackBy: trackByPlayer"
+              class="grid grid-cols-3 p-2 mb-3 rounded-lg shadow-md md:p-2"
+              [ngClass]="{
               'bg-gray-100 dark:bg-gray-900': i % 2 === 0
             }"
-          >
-            <div class="flex items-center">{{i+1}}</div>
-            <div class="flex items-center col-span-2">
-              <img
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAACJ0lEQVRYhe2VzUtUYRTGf+e9d1RorIiwRRCE4iayov6ACjIqSSFGymgzSkLtW7ZoJe0lzD4gMMaRQBPLXGT/giRBSqsgohYqFUzO3PdpMxiYQ/NxLSif5T3Pfc6Pc997XtjSlv53WbUv3k9PNPpc0ArgGqKF3gedX/4IwFBqcp8L3G2ZXTAIiyl5yT8JlbiRzpx+v2kAQ5enDjpvr4AdQLCuHBks4/3xvtGO+XIzXbnGbCpb5yImQBs1BwgEO+XceDaVrYsdYCWRvIjZfrCNmq9BAM0rYWN37ABIpwSFMpyRjPbYAWTWZBuPfr0MtCd2AJM+Ab4Mq0x83AQAZihvAoGMmdgBtkffRoF3QFTKYxAZWlSyKRs7QPdY96p532WwDPrlUxhEgiXnrKv/7rF87AAAfaMd807BEcwyGD+bGHlBplCIDqdHzr6pJLPqu2AwNZsM3fdWgIKvX7g+duJrtVl/VRVPYPjS8zaT2mU6BG43gIzPJs15p5n+kXOvNwVguGeqE9ktoK34qIAVz5DwFG9GQ3Ne7ubVzJmnsQDcS03vItBDmc4XT/rvdkEEBAbjq+bT1x53LFUNcCc1uTcMg5egFrCK/hgMj1h0Ck/2Zto/lLKVDB1MzSbD0E0DzRU3BxAOaJFFzx5debGtYoC6RG4A7ADlrd9SChBtuXw0UDEA8j3UsCfWYkxmZj2l6mGpQi6MjjaovkVeqgXAZOYTq29rydjSv60fhuy7nscn+ewAAAAASUVORK5CYII="
-                class="mr-3"
-              />
-              {{player}}
+            >
+              <div class="flex items-center">{{i+1}}</div>
+              <div class="flex items-center col-span-2">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAACJ0lEQVRYhe2VzUtUYRTGf+e9d1RorIiwRRCE4iayov6ACjIqSSFGymgzSkLtW7ZoJe0lzD4gMMaRQBPLXGT/giRBSqsgohYqFUzO3PdpMxiYQ/NxLSif5T3Pfc6Pc997XtjSlv53WbUv3k9PNPpc0ArgGqKF3gedX/4IwFBqcp8L3G2ZXTAIiyl5yT8JlbiRzpx+v2kAQ5enDjpvr4AdQLCuHBks4/3xvtGO+XIzXbnGbCpb5yImQBs1BwgEO+XceDaVrYsdYCWRvIjZfrCNmq9BAM0rYWN37ABIpwSFMpyRjPbYAWTWZBuPfr0MtCd2AJM+Ab4Mq0x83AQAZihvAoGMmdgBtkffRoF3QFTKYxAZWlSyKRs7QPdY96p532WwDPrlUxhEgiXnrKv/7rF87AAAfaMd807BEcwyGD+bGHlBplCIDqdHzr6pJLPqu2AwNZsM3fdWgIKvX7g+duJrtVl/VRVPYPjS8zaT2mU6BG43gIzPJs15p5n+kXOvNwVguGeqE9ktoK34qIAVz5DwFG9GQ3Ne7ubVzJmnsQDcS03vItBDmc4XT/rvdkEEBAbjq+bT1x53LFUNcCc1uTcMg5egFrCK/hgMj1h0Ck/2Zto/lLKVDB1MzSbD0E0DzRU3BxAOaJFFzx5debGtYoC6RG4A7ADlrd9SChBtuXw0UDEA8j3UsCfWYkxmZj2l6mGpQi6MjjaovkVeqgXAZOYTq29rydjSv60fhuy7nscn+ewAAAAASUVORK5CYII="
+                  class="mr-3"
+                />
+                {{player}}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </ng-container>
+      <ng-template #haveNotJoin>
+        <p class="py-16 text-center">
+          😢 Todavía no se ha unido ningún jugador.
+        </p>
+      </ng-template>
     </div>
   </div>
 </div>

@@ -4,12 +4,13 @@ import {
   PlayersLimit,
   PointsPerRound,
   Rounds,
+  TimerMinutes,
 } from 'src/app/@core/models/server.model';
 
 interface SelectionItem {
   name: string;
-  description: string;
-  value: Rounds | PointsPerRound | PlayersLimit;
+  description?: string;
+  value: TimerMinutes | Rounds | PointsPerRound | PlayersLimit;
 }
 
 @Component({
@@ -19,6 +20,7 @@ interface SelectionItem {
 export class AddServerPage implements OnInit {
   serverForm: FormGroup;
 
+  countdown: SelectionItem[];
   rounds!: SelectionItem[];
   pointsPerRound!: SelectionItem[];
   playersLimit!: SelectionItem[];
@@ -26,6 +28,21 @@ export class AddServerPage implements OnInit {
   submitted = false;
 
   constructor(private fb: FormBuilder) {
+    this.countdown = [
+      {
+        name: `${TimerMinutes.One} minuto`,
+        value: TimerMinutes.One,
+      },
+      {
+        name: `${TimerMinutes.Three} minutos`,
+        value: TimerMinutes.Three,
+      },
+      {
+        name: `${TimerMinutes.Five} minutos`,
+        value: TimerMinutes.Five,
+      },
+    ];
+
     this.rounds = [
       {
         name: 'Muy corta',
@@ -127,6 +144,14 @@ export class AddServerPage implements OnInit {
 
     this.serverForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(20)]],
+      countdown: [
+        null,
+        [
+          Validators.required,
+          Validators.min(TimerMinutes.One),
+          Validators.max(TimerMinutes.Five),
+        ],
+      ],
       rounds: [
         null,
         [
@@ -162,5 +187,14 @@ export class AddServerPage implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+
+    if (this.serverForm.valid) {
+      // Genera el timestamp del countdown.
+      const now = new Date();
+      const minutes = this.controls.countdown.value;
+      const countdown = now.setMinutes(now.getMinutes() + minutes);
+
+      console.log({ ...this.serverForm.value, countdown });
+    }
   }
 }
