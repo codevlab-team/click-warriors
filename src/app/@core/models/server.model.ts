@@ -1,15 +1,10 @@
 export interface Server {
   name: string;
-  countdown: Countdown;
+  countdown: number;
   status: ServerStatus;
   settings: ServerSettings;
   teamYellow: ServerTeam[];
   teamPurple: ServerTeam[];
-}
-
-export interface Countdown {
-  startTime: number;
-  endTime: number;
 }
 
 export interface ServerSettings {

@@ -19,48 +19,126 @@
 
     <div role="table" class="p-6 font-semibold">
       <div role="rowgroup">
-        <div role="row" class="grid grid-cols-6 p-0 py-4 text-gray-400 md:p-3">
-          <div role="columnheader" aria-sort="none">#</div>
-          <div role="columnheader" aria-sort="none">Nombre</div>
-          <div role="columnheader" aria-sort="none">Localización</div>
-          <div role="columnheader" aria-sort="none">Estado</div>
-          <div role="columnheader" aria-sort="none">Jugadores</div>
-          <div role="columnheader" aria-sort="none"></div>
+        <div
+          role="row"
+          class="hidden p-0 py-4 text-gray-400 rounded-t xl:grid xl:grid-cols-8 justify-items-center"
+        >
+          <div role="columnheader" aria-sort="none" class="text-center">#</div>
+          <div role="columnheader" aria-sort="none" class="text-center">
+            Nombre
+          </div>
+          <div role="columnheader" aria-sort="none" class="text-center">
+            Hora de inicio
+          </div>
+          <div role="columnheader" aria-sort="none" class="text-center">
+            Estado
+          </div>
+          <div role="columnheader" aria-sort="none" class="text-center">
+            Rondas
+          </div>
+          <div role="columnheader" aria-sort="none" class="text-center">
+            Puntos por ronda
+          </div>
+          <div role="columnheader" aria-sort="none" class="text-center">
+            Jugadores
+          </div>
+          <div role="columnheader" aria-sort="none" class="text-center"></div>
         </div>
       </div>
       <div role="rowgroup">
         <div
           *ngFor="let server of servers; let i = index"
-          class="grid grid-cols-6 p-2 mb-3 rounded-lg shadow-md bg-gray-50 dark:bg-gray-700 md:p-4"
+          class="grid grid-cols-1 px-4 py-6 mb-3 rounded-lg shadow-md gap-y-6 xl:grid-cols-8 bg-gray-50 dark:bg-gray-700 md:py-4"
           role="row"
         >
-          <div class="flex items-center">{{i+1}}</div>
-          <div class="flex items-center">{{server.name}}</div>
-          <div class="flex items-center">{{server.location}}</div>
-          <div class="flex items-center">
-            <span *ngIf="server.status; else inactive">
-              <div class="flex items-center">
-                <span class="relative flex w-3 h-3 mr-3">
-                  <span
-                    class="absolute inline-flex w-full h-full bg-green-400 rounded-full opacity-75 animate-ping"
-                  ></span>
-                  <span
-                    class="relative inline-flex w-3 h-3 bg-green-500 rounded-full"
-                  ></span>
-                </span>
+          <div
+            class="flex items-center justify-center text-center md:justify-start xl:justify-center"
+          >
+            <span class="mr-2 text-gray-400 xl:hidden">#</span>
+            {{i+1}}
+          </div>
+          <div
+            class="flex flex-col items-center justify-center text-center md:justify-between md:flex-row xl:justify-center"
+          >
+            <span class="text-gray-400 xl:hidden">Nombre: </span>
+            {{server.name}}
+          </div>
+          <div
+            class="flex flex-col items-center justify-center text-center md:justify-between md:flex-row xl:justify-center"
+          >
+            <span class="text-gray-400 xl:hidden">Hora de inicio: </span>
+            {{server.countdown | date:'shortTime'}}
+          </div>
+          <div
+            class="flex flex-col items-center justify-center text-center md:justify-between md:flex-row xl:justify-center"
+          >
+            <span class="text-gray-400 xl:hidden">Estado: </span>
+            <div class="flex items-center" *ngIf="server.status === 'IDLE'">
+              <span class="relative flex w-3 h-3 mr-3">
+                <span
+                  class="absolute inline-flex w-full h-full bg-green-400 rounded-full opacity-75 animate-ping"
+                ></span>
+                <span
+                  class="relative inline-flex w-3 h-3 bg-green-500 rounded-full"
+                ></span>
+              </span>
 
-                Activo
-              </div>
-            </span>
-            <ng-template #inactive>
-              <span>Inactivo</span>
-            </ng-template>
+              En espera
+            </div>
+            <!-- /IDLE -->
+
+            <div class="flex items-center" *ngIf="server.status === 'STARTED'">
+              <span class="relative flex w-3 h-3 mr-3">
+                <span
+                  class="absolute inline-flex w-full h-full bg-yellow-400 rounded-full opacity-75 animate-ping"
+                ></span>
+                <span
+                  class="relative inline-flex w-3 h-3 bg-yellow-500 rounded-full"
+                ></span>
+              </span>
+
+              Iniciado
+            </div>
+            <!-- /STARTED -->
+
+            <div class="flex items-center" *ngIf="server.status === 'ENDED'">
+              <span class="relative flex w-3 h-3 mr-3">
+                <span
+                  class="absolute inline-flex w-full h-full bg-red-400 rounded-full opacity-75 animate-ping"
+                ></span>
+                <span
+                  class="relative inline-flex w-3 h-3 bg-red-500 rounded-full"
+                ></span>
+              </span>
+
+              Finalizado
+            </div>
+            <!-- /ENDED -->
           </div>
-          <div class="flex items-center">
-            <span class="mr-1 text-gray-400"> {{server.players}} </span>
-            <span>/ {{server.playersLimit}} </span>
+          <div
+            class="flex flex-col items-center justify-center text-center md:justify-between md:flex-row xl:justify-center"
+          >
+            <span class="text-gray-400 xl:hidden">Número de rondas: </span>
+            {{server.settings.rounds}}
           </div>
-          <div class="flex items-center">
+          <div
+            class="flex flex-col items-center justify-center text-center md:justify-between md:flex-row xl:justify-center"
+          >
+            <span class="text-gray-400 xl:hidden">Puntos por ronda: </span>
+            {{server.settings.pointsPerRound}}
+          </div>
+          <div
+            class="flex flex-col items-center justify-center text-center md:justify-between md:flex-row xl:justify-center"
+          >
+            <span class="text-gray-400 xl:hidden">Jugadores: </span>
+            <div>
+              <span class="mr-1 text-gray-400">
+                {{server.teamYellow.length + server.teamPurple.length}}
+              </span>
+              <span>/ {{server.settings.playersLimit}} </span>
+            </div>
+          </div>
+          <div class="flex items-center justify-center md:justify-start">
             <a routerLink="/lobby" class="btn btn-primary"> Jugar </a>
           </div>
         </div>
