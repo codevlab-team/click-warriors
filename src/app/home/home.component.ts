@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  get user(): any {
+  get user() {
     return this.userForm.value;
   }
 

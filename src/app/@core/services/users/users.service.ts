@@ -19,6 +19,10 @@ export class UsersService {
     this.user$.next(user);
   }
 
+  patchUser(user: Partial<User>) {
+    localStorage.user = JSON.stringify({ ...this.user, ...user });
+  }
+
   removeUser() {
     this.removeStoredUser();
   }

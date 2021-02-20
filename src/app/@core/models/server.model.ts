@@ -1,6 +1,7 @@
 export interface Server {
   name: string;
   countdown: number;
+  host: string;
   status: ServerStatus;
   settings: ServerSettings;
   teamYellow: ServerTeam[];
@@ -52,3 +53,5 @@ export interface ServerTeam {
 }
 
 export type ServerStatus = 'IDLE' | 'STARTED' | 'ENDED';
+
+export type Team = 'yellow' | 'purple';

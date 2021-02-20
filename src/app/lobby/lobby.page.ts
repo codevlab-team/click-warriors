@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
+import { Team } from '../@core/models/server.model';
 import { UsersService } from '../@core/services/users/users.service';
 
 @Component({
@@ -23,8 +24,8 @@ export class LobbyPage implements OnInit {
   constructor(private router: Router, private usersService: UsersService) {}
 
   ngOnInit(): void {
-    this.teamYellow = [];
-    this.teamPurple = [];
+    this.teamYellow = ['carlitos_2332', 'Lucia_3232', 'Pedrito_3333'];
+    this.teamPurple = ['María_2333'];
 
     const remaining = Math.max(0, this.countdown - new Date().getTime());
     const countdownSeconds = Math.round(remaining / 1000);
@@ -51,7 +52,7 @@ export class LobbyPage implements OnInit {
       });
   }
 
-  onClickJoin(team: 'yellow' | 'purple'): void {
+  onClickJoin(team: Team): void {
     const user = this.usersService.user;
 
     if (user) {
@@ -69,12 +70,10 @@ export class LobbyPage implements OnInit {
       const playersInYellow = this.teamYellow.length;
       const playersInPurple = this.teamPurple.length;
 
-      if (playersInYellow > playersInPurple) {
-        this.teamPurple.push(user.nickname);
-        this.userInTeamPurple = true;
+      if (playersInYellow < playersInPurple) {
+        this.addToTeamYellow(user.nickname);
       } else {
-        this.teamYellow.push(user.nickname);
-        this.userInTeamYellow = true;
+        this.addToTeamPurple(user.nickname);
       }
     }
   }
@@ -88,6 +87,10 @@ export class LobbyPage implements OnInit {
     this.userInTeamYellow = true;
     this.userInTeamPurple = false;
     this.teamPurple = this.teamPurple.filter((n) => n !== nickname);
+    this.usersService.patchUser({
+      team: 'yellow',
+      order: this.teamYellow.length - 1,
+    });
   }
 
   private addToTeamPurple(nickname: string): void {
@@ -95,5 +98,9 @@ export class LobbyPage implements OnInit {
     this.userInTeamPurple = true;
     this.userInTeamYellow = false;
     this.teamYellow = this.teamYellow.filter((n) => n !== nickname);
+    this.usersService.patchUser({
+      team: 'purple',
+      order: this.teamPurple.length - 1,
+    });
   }
 }

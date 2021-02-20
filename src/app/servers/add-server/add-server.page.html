@@ -60,89 +60,92 @@
       </div>
       <!-- /input -->
 
-      <div class="input-group">
-        <label for="name" class="input-label">Duración de la partida:</label>
-        <div class="grid grid-cols-1 gap-2 lg:grid-cols-5">
-          <div
-            tabindex="0"
-            class="selection-item"
-            *ngFor="let round of rounds; let i = index"
-          >
-            <input
-              [id]="'round' + i"
-              type="radio"
-              class="hidden"
-              [value]="round.value"
-              formControlName="rounds"
-            />
-            <label [for]="'round' + i">
-              <span class="text-2xl font-semibold uppercase">
-                {{round.name}}
-              </span>
-              <span class="text-gray-400 dark:text-gray-400">
-                {{round.description}}
-              </span>
-            </label>
+      <div formGroupName="settings">
+        <div class="input-group">
+          <label for="name" class="input-label">Duración de la partida:</label>
+          <div class="grid grid-cols-1 gap-2 lg:grid-cols-5">
+            <div
+              tabindex="0"
+              class="selection-item"
+              *ngFor="let round of rounds; let i = index"
+            >
+              <input
+                [id]="'round' + i"
+                type="radio"
+                class="hidden"
+                [value]="round.value"
+                formControlName="rounds"
+              />
+              <label [for]="'round' + i">
+                <span class="text-2xl font-semibold uppercase">
+                  {{round.name}}
+                </span>
+                <span class="text-gray-400 dark:text-gray-400">
+                  {{round.description}}
+                </span>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- /input -->
+        <!-- /input -->
 
-      <div class="input-group">
-        <label for="name" class="input-label">Puntaje por ronda:</label>
-        <div class="grid grid-cols-1 gap-2 lg:grid-cols-5">
-          <div
-            tabindex="0"
-            class="selection-item"
-            *ngFor="let point of pointsPerRound; let i = index"
-          >
-            <input
-              [id]="'points' + i"
-              type="radio"
-              class="hidden"
-              [value]="point.value"
-              formControlName="pointsPerRound"
-            />
-            <label [for]="'points' + i">
-              <span class="text-2xl font-semibold uppercase">
-                {{point.name}}
-              </span>
-              <span class="text-gray-400 dark:text-gray-400">
-                {{point.description}}
-              </span>
-            </label>
+        <div class="input-group">
+          <label for="name" class="input-label">Puntaje por ronda:</label>
+          <div class="grid grid-cols-1 gap-2 lg:grid-cols-5">
+            <div
+              tabindex="0"
+              class="selection-item"
+              *ngFor="let point of pointsPerRound; let i = index"
+            >
+              <input
+                [id]="'points' + i"
+                type="radio"
+                class="hidden"
+                [value]="point.value"
+                formControlName="pointsPerRound"
+              />
+              <label [for]="'points' + i">
+                <span class="text-2xl font-semibold uppercase">
+                  {{point.name}}
+                </span>
+                <span class="text-gray-400 dark:text-gray-400">
+                  {{point.description}}
+                </span>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- /input -->
+        <!-- /input -->
 
-      <div class="input-group">
-        <label for="name" class="input-label">Límite de jugadores:</label>
-        <div class="grid grid-cols-1 gap-2 lg:grid-cols-5">
-          <div
-            tabindex="0"
-            class="selection-item"
-            *ngFor="let player of playersLimit; let i = index"
-          >
-            <input
-              [id]="'player' + i"
-              type="radio"
-              class="hidden"
-              [value]="player.value"
-              formControlName="playersLimit"
-            />
-            <label [for]="'player' + i">
-              <span class="text-2xl font-semibold uppercase">
-                {{player.name}}
-              </span>
-              <span class="text-gray-400 dark:text-gray-400">
-                {{player.description}}
-              </span>
-            </label>
+        <div class="input-group">
+          <label for="name" class="input-label">Límite de jugadores:</label>
+          <div class="grid grid-cols-1 gap-2 lg:grid-cols-5">
+            <div
+              tabindex="0"
+              class="selection-item"
+              *ngFor="let player of playersLimit; let i = index"
+            >
+              <input
+                [id]="'player' + i"
+                type="radio"
+                class="hidden"
+                [value]="player.value"
+                formControlName="playersLimit"
+              />
+              <label [for]="'player' + i">
+                <span class="text-2xl font-semibold uppercase">
+                  {{player.name}}
+                </span>
+                <span class="text-gray-400 dark:text-gray-400">
+                  {{player.description}}
+                </span>
+              </label>
+            </div>
           </div>
         </div>
+        <!-- /input -->
       </div>
-      <!-- /input -->
+      <!-- /settings group -->
 
       <div class="my-8" *ngIf="submitted && !serverForm.valid">
         <p *ngIf="controls.name.errors?.required" class="mb-2 text-red-300">
@@ -177,3 +180,11 @@
     </form>
   </div>
 </div>
+
+<pre>
+  <code>
+    {{serverForm.value | json}}
+  </code>
+</pre>
+
+<app-loader [visible]="loaderVisible"></app-loader>

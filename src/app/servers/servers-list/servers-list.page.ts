@@ -22,6 +22,7 @@ export class ServersListPage implements OnInit {
         name: 'Servidor de prueba',
         countdown: 1613855461367,
         status: 'IDLE',
+        host: 'Carlitos_2345',
         settings: {
           rounds: Rounds.Short,
           pointsPerRound: PointsPerRound.Level3,
@@ -34,6 +35,7 @@ export class ServersListPage implements OnInit {
       {
         name: 'Servidor de prueba',
         countdown: 1613855461367,
+        host: 'Pedro_5643',
         status: 'STARTED',
         settings: {
           rounds: Rounds.Short,
@@ -47,6 +49,7 @@ export class ServersListPage implements OnInit {
       {
         name: 'Servidor de prueba',
         countdown: 1613855461367,
+        host: 'María_9999',
         status: 'ENDED',
         settings: {
           rounds: Rounds.Short,

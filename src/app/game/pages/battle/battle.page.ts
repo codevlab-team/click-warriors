@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
+import { Team } from 'src/app/@core/models/server.model';
+import { UsersService } from 'src/app/@core/services/users/users.service';
 
 @Component({
   templateUrl: './battle.page.html',
@@ -23,17 +25,30 @@ export class BattlePage implements OnInit, OnDestroy {
 
   countdown = 10;
 
+  userTeam!: Team;
   everybodyJoined = false;
 
   goal = false;
-  winner!: 'yellow' | 'purple';
+  winner!: Team;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private usersService: UsersService) {}
 
   ngOnInit(): void {
+    const userTeam = this.usersService.user?.team;
+
+    // TODO: Mover a guardián
+    if (userTeam) {
+      this.userTeam = userTeam;
+    } else {
+      this.router.navigate(['/servers']);
+    }
+
     setTimeout(() => {
       this.everybodyJoined = true;
-      this.runCountdown();
+
+      if (this.everybodyJoined) {
+        this.runCountdown();
+      }
     }, 4000);
   }
 
@@ -83,22 +98,25 @@ export class BattlePage implements OnInit, OnDestroy {
   }
 
   private reset(): void {
-    this.yellowLife = 100;
-    this.purpleLife = 100;
-    this.yellowClicks = 0;
-    this.purpleClicks = 0;
-
     setTimeout(() => {
+      this.yellowLife = 100;
+      this.purpleLife = 100;
+      this.yellowClicks = 0;
+      this.purpleClicks = 0;
       this.countdown = 5;
       this.goal = false;
       this.runCountdown();
     }, this.stageEager);
   }
 
-  private endMatch(winner: 'yellow' | 'purple'): void {
+  private endMatch(winner: Team): void {
     setTimeout(() => {
       this.goal = false;
       this.winner = winner;
+      this.usersService.patchUser({
+        team: null,
+        order: null,
+      });
 
       setTimeout(() => {
         this.router.navigate(['/']);
