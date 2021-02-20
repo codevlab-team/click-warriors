@@ -1,5 +1,7 @@
 export interface Server {
   name: string;
+  countdown: number;
+  host: string;
   status: ServerStatus;
   settings: ServerSettings;
   teamYellow: ServerTeam[];
@@ -10,6 +12,7 @@ export interface ServerSettings {
   rounds: Rounds;
   pointsPerRound: PointsPerRound;
   playersLimit: PlayersLimit;
+  timer: TimerMinutes;
 }
 
 export enum Rounds {
@@ -36,6 +39,12 @@ export enum PlayersLimit {
   Massive = 300,
 }
 
+export enum TimerMinutes {
+  One = 1,
+  Three = 3,
+  Five = 5,
+}
+
 export interface ServerTeam {
   playerNickname: string;
   clicksCount: number;
@@ -44,3 +53,5 @@ export interface ServerTeam {
 }
 
 export type ServerStatus = 'IDLE' | 'STARTED' | 'ENDED';
+
+export type Team = 'yellow' | 'purple';

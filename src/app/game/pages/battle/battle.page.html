@@ -1,4 +1,4 @@
-<div class="container h-full">
+<div class="container pb-16">
   <!-- <app-scoreboard
       [yellowScore]="yellowScore"
       [purpleScore]="purpleScore"
@@ -34,13 +34,10 @@
         </div>
       </div>
       <button
-        class="relative transition-transform duration-300 ease-in transform rounded-full select-none player bg-gradient-to-br from-yellow-300 to-yellow-600 w-44 h-44 lg:w-96 lg:h-96 ring-8 ring-yellow-400 ring-opacity-40 focus:outline-none hover:-rotate-45"
+        class="relative rounded-full select-none player bg-gradient-to-br from-yellow-300 to-yellow-600 w-44 h-44 lg:w-96 lg:h-96 ring-8 ring-yellow-400 ring-opacity-40 focus:outline-none"
+        [disabled]="userTeam === 'purple'"
         (click)="onClickYellow()"
-      >
-        <div
-          class="absolute top-0 w-full h-full bg-yellow-300 rounded-full ping"
-        ></div>
-      </button>
+      ></button>
     </div>
     <div class="flex flex-col items-center">
       <div class="flex flex-col items-center mb-6">
@@ -69,13 +66,10 @@
         </div>
       </div>
       <button
-        class="relative transition-transform duration-300 ease-in transform rounded-full select-none player bg-gradient-to-bl from-purple-300 to-purple-600 w-44 h-44 lg:w-96 lg:h-96 focus:outline-none ring-8 ring-purple-400 ring-opacity-40 hover:rotate-45"
+        class="relative rounded-full select-none player bg-gradient-to-bl from-purple-300 to-purple-600 w-44 h-44 lg:w-96 lg:h-96 focus:outline-none ring-8 ring-purple-400 ring-opacity-40"
+        [disabled]="userTeam === 'yellow'"
         (click)="onClickPurple()"
-      >
-        <div
-          class="fixed top-0 w-full h-full bg-purple-300 rounded-full ping"
-        ></div>
-      </button>
+      ></button>
     </div>
   </div>
 </div>

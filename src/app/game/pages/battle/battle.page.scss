@@ -1,19 +1,10 @@
-.ping {
-  z-index: -1;
+.player {
+  transform: scale(1.1);
 }
-
-.player:active .ping {
-  animation: ping 0.1s forwards;
-  z-index: -1;
+.player:active {
+  transform: scale(1);
 }
-
-@keyframes ping {
-  from {
-    transform: scale(0.25);
-    opacity: 1;
-  }
-  to {
-    transform: scale(0.9);
-    opacity: 0;
-  }
+.player:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }

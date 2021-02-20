@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  PlayersLimit,
+  PointsPerRound,
+  Rounds,
+  Server,
+  TimerMinutes,
+} from 'src/app/@core/models/server.model';
 
 @Component({
   templateUrl: './servers-list.page.html',
   styleUrls: ['./servers-list.page.scss'],
 })
 export class ServersListPage implements OnInit {
-  servers: any = [];
+  servers!: Server[];
 
   constructor() {}
 
@@ -13,11 +20,53 @@ export class ServersListPage implements OnInit {
     this.servers = [
       {
         name: 'Servidor de prueba',
-        location: 'Medellín, Colombia',
-        status: true,
-        players: 12,
-        playersLimit: 40,
+        countdown: 1613855461367,
+        status: 'IDLE',
+        host: 'Carlitos_2345',
+        settings: {
+          rounds: Rounds.Short,
+          pointsPerRound: PointsPerRound.Level3,
+          playersLimit: PlayersLimit.Medium,
+          timer: TimerMinutes.Three,
+        },
+        teamYellow: [],
+        teamPurple: [],
+      },
+      {
+        name: 'Servidor de prueba',
+        countdown: 1613855461367,
+        host: 'Pedro_5643',
+        status: 'STARTED',
+        settings: {
+          rounds: Rounds.Short,
+          pointsPerRound: PointsPerRound.Level3,
+          playersLimit: PlayersLimit.Medium,
+          timer: TimerMinutes.Three,
+        },
+        teamYellow: [],
+        teamPurple: [],
+      },
+      {
+        name: 'Servidor de prueba',
+        countdown: 1613855461367,
+        host: 'María_9999',
+        status: 'ENDED',
+        settings: {
+          rounds: Rounds.Short,
+          pointsPerRound: PointsPerRound.Level3,
+          playersLimit: PlayersLimit.Medium,
+          timer: TimerMinutes.Three,
+        },
+        teamYellow: [],
+        teamPurple: [],
       },
     ];
+  }
+
+  canJoin(server: Server): boolean {
+    const joinedPlayers = server.teamYellow.length + server.teamPurple.length;
+    return (
+      server.status === 'IDLE' && joinedPlayers < server.settings.playersLimit
+    );
   }
 }

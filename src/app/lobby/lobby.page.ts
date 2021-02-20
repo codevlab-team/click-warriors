@@ -1,18 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import { map, takeWhile } from 'rxjs/operators';
+import { Team } from '../@core/models/server.model';
 import { UsersService } from '../@core/services/users/users.service';
 
 @Component({
   templateUrl: './lobby.page.html',
   styleUrls: ['./lobby.page.scss'],
 })
-export class LobbyPage implements OnInit, OnDestroy {
+export class LobbyPage implements OnInit {
   teamYellow: string[] = [];
   teamPurple: string[] = [];
 
-  countdown = 30;
+  readonly countdown: number = 1613850523024;
+
+  displayTime!: string;
 
   userInTeamYellow = false;
   userInTeamPurple = false;
@@ -21,37 +24,35 @@ export class LobbyPage implements OnInit, OnDestroy {
   constructor(private router: Router, private usersService: UsersService) {}
 
   ngOnInit(): void {
-    this.teamYellow = [
-      'Carlitos Perez',
-      'Mariana Gomez',
-      'Lucía Gonzalez',
-      'Mario Velez',
-    ];
-    this.teamPurple = ['José Velez', 'Pedro García', 'Sara Beltrán'];
+    this.teamYellow = ['carlitos_2332', 'Lucia_3232', 'Pedrito_3333'];
+    this.teamPurple = ['María_2333'];
+
+    const remaining = Math.max(0, this.countdown - new Date().getTime());
+    const countdownSeconds = Math.round(remaining / 1000);
 
     interval(1000)
-      .pipe(takeWhile(() => this.countdown > 0))
-      .subscribe(() => {
-        this.countdown--;
-        if (this.countdown === 0) {
-          // Si el usuario no eligió equipo, el sistema lo une automáticamente
+      .pipe(
+        map((value) => countdownSeconds - value),
+        takeWhile((value) => value >= 0)
+      )
+      .subscribe((value) => {
+        const minutes = Math.floor(value / 60);
+        const seconds = value - minutes * 60;
+        this.displayTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+        if (value === 0) {
           if (
             this.userInTeamYellow === false &&
             this.userInTeamPurple === false
           ) {
             this.joinAutomatically();
           }
-
-          this.router.navigate(['/game/battle']);
+          // this.router.navigate(['/game/battle']);
         }
       });
   }
 
-  ngOnDestroy(): void {
-    this.countdown = 0;
-  }
-
-  onClickJoin(team: 'yellow' | 'purple'): void {
+  onClickJoin(team: Team): void {
     const user = this.usersService.user;
 
     if (user) {
@@ -69,10 +70,10 @@ export class LobbyPage implements OnInit, OnDestroy {
       const playersInYellow = this.teamYellow.length;
       const playersInPurple = this.teamPurple.length;
 
-      if (playersInYellow > playersInPurple) {
-        this.teamPurple.push(user.nickname);
+      if (playersInYellow < playersInPurple) {
+        this.addToTeamYellow(user.nickname);
       } else {
-        this.teamYellow.push(user.nickname);
+        this.addToTeamPurple(user.nickname);
       }
     }
   }
@@ -86,6 +87,10 @@ export class LobbyPage implements OnInit, OnDestroy {
     this.userInTeamYellow = true;
     this.userInTeamPurple = false;
     this.teamPurple = this.teamPurple.filter((n) => n !== nickname);
+    this.usersService.patchUser({
+      team: 'yellow',
+      order: this.teamYellow.length - 1,
+    });
   }
 
   private addToTeamPurple(nickname: string): void {
@@ -93,5 +98,9 @@ export class LobbyPage implements OnInit, OnDestroy {
     this.userInTeamPurple = true;
     this.userInTeamYellow = false;
     this.teamYellow = this.teamYellow.filter((n) => n !== nickname);
+    this.usersService.patchUser({
+      team: 'purple',
+      order: this.teamPurple.length - 1,
+    });
   }
 }
