@@ -52,7 +52,7 @@ export class AddServerPage implements OnInit {
         value: Rounds.Extense,
       },
       {
-        name: 'Muy corta',
+        name: 'Muy larga',
         description: `${Rounds.VeryExtense} rondas`,
 
         value: Rounds.VeryExtense,
