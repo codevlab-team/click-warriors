@@ -154,20 +154,26 @@
         <p *ngIf="controls.name.errors?.maxlength" class="mb-2 text-red-300">
           El campo <strong>"Nombre"</strong> NO debe superar los 20 caracteres.
         </p>
-        <p *ngIf="controls.rounds.errors?.required" class="mb-2 text-red-300">
+        <p
+          *ngIf="controls.countdown.errors?.required"
+          class="mb-2 text-red-300"
+        >
           El campo <strong>"Partida comienza en"</strong> es obligatorio.
         </p>
-        <p *ngIf="controls.rounds.errors?.required" class="mb-2 text-red-300">
+        <p
+          *ngIf="settingsControls.rounds.errors?.required"
+          class="mb-2 text-red-300"
+        >
           El campo <strong>"Duración de la partida"</strong> es obligatorio.
         </p>
         <p
-          *ngIf="controls.pointsPerRound.errors?.required"
+          *ngIf="settingsControls.pointsPerRound.errors?.required"
           class="mb-2 text-red-300"
         >
           El campo <strong>"Puntaje por ronda"</strong> es obligatorio.
         </p>
         <p
-          *ngIf="controls.playersLimit.errors?.required"
+          *ngIf="settingsControls.playersLimit.errors?.required"
           class="mb-2 text-red-300"
         >
           El campo <strong>"Límite de jugadores"</strong> es obligatorio.
@@ -180,11 +186,5 @@
     </form>
   </div>
 </div>
-
-<pre>
-  <code>
-    {{serverForm.value | json}}
-  </code>
-</pre>
 
 <app-loader [visible]="loaderVisible"></app-loader>
