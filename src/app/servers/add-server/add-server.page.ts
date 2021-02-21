@@ -182,6 +182,10 @@ export class AddServerPage implements OnInit {
     return this.serverForm.controls;
   }
 
+  get settingsControls() {
+    return (this.serverForm.get('settings') as FormGroup).controls;
+  }
+
   ngOnInit(): void {}
 
   onSubmit() {
