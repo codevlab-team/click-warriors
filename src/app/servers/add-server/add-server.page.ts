@@ -188,7 +188,7 @@ export class AddServerPage implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit() {
+  onSubmit(): void {
     this.submitted = true;
 
     if (this.serverForm.valid) {
