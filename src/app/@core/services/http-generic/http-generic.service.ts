@@ -26,15 +26,6 @@ const isID = (id: any): Boolean =>
 export class HttpGenericService {
   private readonly http: HttpClient;
   private readonly httpConfig: HttpGenericConfig;
-  private readonly httpMethodMap:
-    | Partial<{
-        GET: HttpMethod;
-        POST: HttpMethod;
-        PATCH: HttpMethod;
-        PUT: HttpMethod;
-        DELETE: HttpMethod;
-      }>
-    | undefined;
   private readonly notifier: NotificationsService;
 
   constructor(protected config: HttpGenericConfig) {
@@ -62,7 +53,7 @@ export class HttpGenericService {
     idOrConfig?: ID | HttpGetConfig<T>,
     config?: HttpGetConfig<T>
   ): Observable<T> {
-    const method = this.getHttpMethod(HttpMethod.GET);
+    const method = HttpMethod.GET;
     const isSingle = isID(idOrConfig);
     const entityId = isSingle ? (idOrConfig as ID) : undefined;
     const conf = (!isSingle ? (idOrConfig as HttpGetConfig<T>) : config) || {};
@@ -75,7 +66,7 @@ export class HttpGenericService {
   }
 
   add<T>(entity: T, config?: HttpAddConfig<T>): Observable<T> {
-    const method = this.getHttpMethod(HttpMethod.POST);
+    const method = HttpMethod.POST;
     const url = this.resolveUrl(config);
     const configWithBody = { ...config, body: entity };
     return this.http.request(method, url, configWithBody).pipe(
@@ -90,7 +81,7 @@ export class HttpGenericService {
     entity: Partial<T>,
     config?: HttpUpdateConfig<T>
   ): Observable<T> {
-    const method = this.getHttpMethod(config?.method || HttpMethod.PUT);
+    const method = config?.method || HttpMethod.PUT;
     const url = this.resolveUrl(config, id);
     const configWithBody = { ...config, body: entity };
     return this.http.request(method, url, configWithBody).pipe(
@@ -101,7 +92,7 @@ export class HttpGenericService {
   }
 
   delete<T>(id: ID, config?: HttpDeleteConfig<T>): Observable<T> {
-    const method = this.getHttpMethod(HttpMethod.DELETE);
+    const method = HttpMethod.DELETE;
     const url = this.resolveUrl(config, id);
     return this.http.request(method, url, config).pipe(
       mapResponse<any>(config),
@@ -127,18 +118,6 @@ export class HttpGenericService {
     }
 
     return final;
-  }
-
-  protected getHttpMethod(type: HttpMethod) {
-    let httpMethod: HttpMethod | undefined;
-    if (this.httpMethodMap) {
-      httpMethod = this.httpMethodMap[type];
-    }
-    if (!httpMethod) {
-      throw new Error('Unknown HttpMethod');
-    }
-
-    return httpMethod;
   }
 
   protected dispatchSuccess(message: string): void {

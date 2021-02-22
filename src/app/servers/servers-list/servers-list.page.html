@@ -17,7 +17,11 @@
       <span class="text-gray-400"> {{servers.length}} </span>
     </div>
 
-    <div role="table" class="p-6 font-semibold">
+    <div
+      *ngIf="servers.length; else noServers"
+      role="table"
+      class="p-6 font-semibold"
+    >
       <div role="rowgroup">
         <div
           role="row"
@@ -47,7 +51,7 @@
       </div>
       <div role="rowgroup">
         <div
-          *ngFor="let server of servers; let i = index"
+          *ngFor="let server of servers; let i = index;"
           class="grid grid-cols-1 px-4 py-6 mb-3 rounded-lg shadow-md gap-y-6 xl:grid-cols-8 bg-gray-50 dark:bg-gray-700 md:py-4"
           role="row"
         >
@@ -139,10 +143,21 @@
             </div>
           </div>
           <div class="flex items-center justify-center md:justify-start">
-            <a routerLink="/lobby" class="btn btn-primary"> Jugar </a>
+            <a [routerLink]="['/lobby', server.id]" class="btn btn-primary">
+              Jugar
+            </a>
           </div>
         </div>
       </div>
     </div>
+
+    <ng-template #noServers>
+      <div *ngIf="loading === false" class="grid py-16 place-items-center">
+        <p class="mb-6 text-center">
+          😢 No encontramos servidores disponibles.
+        </p>
+        <a routerLink="add" class="btn btn-warning">Crear Servidor</a>
+      </div>
+    </ng-template>
   </div>
 </div>

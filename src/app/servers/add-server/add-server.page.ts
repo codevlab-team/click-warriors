@@ -5,8 +5,10 @@ import {
   PlayersLimit,
   PointsPerRound,
   Rounds,
+  Server,
   TimerMinutes,
 } from 'src/app/@core/models/server.model';
+import { ServersService } from 'src/app/@core/services/servers/servers.service';
 import { UsersService } from 'src/app/@core/services/users/users.service';
 
 interface SelectionItem {
@@ -33,7 +35,8 @@ export class AddServerPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private serversService: ServersService
   ) {
     this.countdown = [
       {
@@ -199,16 +202,26 @@ export class AddServerPage implements OnInit {
       const minutes = this.controls.countdown.value;
       const countdown = now.setMinutes(now.getMinutes() + minutes);
 
-      console.log({
+      const serverToSave: Server = {
         ...this.serverForm.value,
         countdown,
         host: this.usersService.user?.nickname,
-      });
+        teamYellow: [],
+        teamPurple: [],
+      };
 
-      setTimeout(() => {
-        this.loaderVisible = false;
-        this.router.navigate(['/servers']);
-      }, 3000);
+      this.serversService
+        .add<Server>(serverToSave, {
+          errorMsg: 'Ocurrió un problema al intentar crear el servidor.',
+        })
+        .subscribe(
+          (res) => {
+            console.log(res);
+            this.loaderVisible = false;
+            this.router.navigate(['/servers']);
+          },
+          (err) => (this.loaderVisible = false)
+        );
     }
   }
 }

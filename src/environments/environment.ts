@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  url: 'https://us-central1-click-warriors.cloudfunctions.net/api',
+  // url: 'https://us-central1-click-warriors.cloudfunctions.net/api',
+  url: 'http://localhost:5001/click-warriors/us-central1/api',
   firebase: {
     apiKey: 'AIzaSyDuYZFbKui2fpm8Xwm2SqPAgaDZSvpsCxs',
     authDomain: 'click-warriors.firebaseapp.com',
