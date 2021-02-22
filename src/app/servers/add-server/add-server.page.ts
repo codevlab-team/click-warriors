@@ -206,8 +206,11 @@ export class AddServerPage implements OnInit {
         ...this.serverForm.value,
         countdown,
         host: this.usersService.user?.nickname,
+        scoreYellow: 0,
+        scorePurple: 0,
         teamYellow: [],
         teamPurple: [],
+        winner: '',
       };
 
       this.serversService
