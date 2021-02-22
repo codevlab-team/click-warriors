@@ -95,7 +95,10 @@ export class BattlePage implements OnInit, OnDestroy {
         .update(
           this.serverId,
           { order: user.order },
-          { urlPostfix: 'player/yellow/click' }
+          {
+            urlPostfix: 'player/yellow/click',
+            method: HttpMethod.PATCH,
+          }
         )
         .subscribe(console.log);
     }
@@ -109,7 +112,10 @@ export class BattlePage implements OnInit, OnDestroy {
         .update(
           this.serverId,
           { order: user.order },
-          { urlPostfix: 'player/purple/click' }
+          {
+            urlPostfix: 'player/purple/click',
+            method: HttpMethod.PATCH,
+          }
         )
         .subscribe(console.log);
     }
