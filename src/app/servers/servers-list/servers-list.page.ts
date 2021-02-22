@@ -1,66 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  PlayersLimit,
-  PointsPerRound,
-  Rounds,
-  Server,
-  TimerMinutes,
-} from 'src/app/@core/models/server.model';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Server } from 'src/app/@core/models/server.model';
+import { ServersService } from 'src/app/@core/services/servers/servers.service';
 
 @Component({
   templateUrl: './servers-list.page.html',
   styleUrls: ['./servers-list.page.scss'],
 })
 export class ServersListPage implements OnInit {
-  servers!: Server[];
+  servers: Server[] = [];
 
-  constructor() {}
+  loading = true;
+
+  constructor(
+    private serversService: ServersService,
+    private db: AngularFirestore
+  ) {}
 
   ngOnInit(): void {
-    this.servers = [
-      {
-        name: 'Servidor de prueba',
-        countdown: 1613855461367,
-        status: 'IDLE',
-        host: 'Carlitos_2345',
-        settings: {
-          rounds: Rounds.Short,
-          pointsPerRound: PointsPerRound.Level3,
-          playersLimit: PlayersLimit.Medium,
-          timer: TimerMinutes.Three,
-        },
-        teamYellow: [],
-        teamPurple: [],
-      },
-      {
-        name: 'Servidor de prueba',
-        countdown: 1613855461367,
-        host: 'Pedro_5643',
-        status: 'STARTED',
-        settings: {
-          rounds: Rounds.Short,
-          pointsPerRound: PointsPerRound.Level3,
-          playersLimit: PlayersLimit.Medium,
-          timer: TimerMinutes.Three,
-        },
-        teamYellow: [],
-        teamPurple: [],
-      },
-      {
-        name: 'Servidor de prueba',
-        countdown: 1613855461367,
-        host: 'María_9999',
-        status: 'ENDED',
-        settings: {
-          rounds: Rounds.Short,
-          pointsPerRound: PointsPerRound.Level3,
-          playersLimit: PlayersLimit.Medium,
-          timer: TimerMinutes.Three,
-        },
-        teamYellow: [],
-        teamPurple: [],
-      },
-    ];
+    this.db
+      .collection<Server>('Servers')
+      .valueChanges()
+      .subscribe((servers) => {
+        console.log(servers);
+        this.servers = servers;
+        this.loading = false;
+      });
   }
 
   canJoin(server: Server): boolean {

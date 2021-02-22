@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LobbyPage } from './lobby.page';
 
-const routes: Routes = [{ path: '', component: LobbyPage }];
+const routes: Routes = [{ path: ':serverId', component: LobbyPage }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
