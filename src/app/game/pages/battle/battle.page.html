@@ -75,27 +75,28 @@
 </div>
 
 <div
-  *ngIf="countdown > 0"
+  *ngIf="everybodyJoined === false"
+  class="fixed top-0 bottom-0 left-0 right-0 z-50 grid text-center bg-black bg-opacity-80 counter place-items-center"
+>
+  <span class="text-lg text-white select-none lg:text-3xl font-display">
+    Esperando que todos ingresen...
+  </span>
+</div>
+
+<div
+  *ngIf="countdown > 0 && everybodyJoined"
   class="fixed top-0 bottom-0 left-0 right-0 z-50 grid bg-black bg-opacity-80 counter place-items-center"
 >
-  <span
-    *ngIf="everybodyJoined; else waiting"
-    class="text-white select-none text-9xl font-display"
-  >
+  <span class="text-white select-none text-9xl font-display">
     {{countdown}}
   </span>
-  <ng-template #waiting>
-    <span class="text-3xl text-white select-none font-display">
-      Esperando que todos ingresen...
-    </span>
-  </ng-template>
 </div>
 
 <div
   *ngIf="goal"
   class="fixed top-0 bottom-0 left-0 right-0 z-50 grid text-center bg-black bg-opacity-80 counter place-items-center"
 >
-  <span class="text-white select-none text-8xl font-display">
+  <span class="text-lg text-white select-none lg:text-8xl font-display">
     ¡GOOOOL! <br />
     🎉🎉🎉🥳🥳🥳
   </span>
@@ -105,7 +106,7 @@
   *ngIf="winner"
   class="fixed top-0 bottom-0 left-0 right-0 z-50 grid text-center bg-black bg-opacity-80 counter place-items-center"
 >
-  <span class="text-white select-none text-8xl font-display">
+  <span class="text-lg text-white select-none lg:text-8xl font-display">
     ¡JUEGO FINALIZADO!<br />
     👏👏👏👏👏👏
   </span>

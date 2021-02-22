@@ -1,11 +1,15 @@
 export interface Server {
+  id: string;
   name: string;
   countdown: number;
   host: string;
   status: ServerStatus;
   settings: ServerSettings;
+  scoreYellow: number;
+  scorePurple: number;
   teamYellow: ServerTeam[];
   teamPurple: ServerTeam[];
+  winner: Team;
 }
 
 export interface ServerSettings {
@@ -48,8 +52,9 @@ export enum TimerMinutes {
 export interface ServerTeam {
   playerNickname: string;
   clicksCount: number;
+  totalClicks: number;
   ready: boolean;
-  order: 0;
+  order: number;
 }
 
 export type ServerStatus = 'IDLE' | 'STARTED' | 'ENDED';

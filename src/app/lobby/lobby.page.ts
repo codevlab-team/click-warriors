@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { ActivatedRoute, Router } from '@angular/router';
 import { interval } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
-import { Team } from '../@core/models/server.model';
+import { Server, ServerTeam, Team } from '../@core/models/server.model';
+import { HttpMethod } from '../@core/services/http-generic';
+import { ServersService } from '../@core/services/servers/servers.service';
 import { UsersService } from '../@core/services/users/users.service';
 
 @Component({
@@ -10,25 +13,75 @@ import { UsersService } from '../@core/services/users/users.service';
   styleUrls: ['./lobby.page.scss'],
 })
 export class LobbyPage implements OnInit {
-  teamYellow: string[] = [];
-  teamPurple: string[] = [];
-
-  readonly countdown: number = 1613850523024;
+  teamYellow: ServerTeam[] = [];
+  teamPurple: ServerTeam[] = [];
 
   displayTime!: string;
+  timerInited = false;
 
   userInTeamYellow = false;
   userInTeamPurple = false;
   loaderVisible = false;
 
-  constructor(private router: Router, private usersService: UsersService) {}
+  serverId!: string | null;
+
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private usersService: UsersService,
+    private serversService: ServersService,
+    private db: AngularFirestore
+  ) {
+    this.activatedRoute.paramMap.subscribe(
+      (paramMap) => (this.serverId = paramMap.get('serverId'))
+    );
+  }
 
   ngOnInit(): void {
-    this.teamYellow = ['carlitos_2332', 'Lucia_3232', 'Pedrito_3333'];
-    this.teamPurple = ['María_2333'];
+    if (this.serverId) {
+      this.db
+        .collection<Server>('Servers')
+        .doc(this.serverId)
+        .valueChanges()
+        .subscribe((server) => {
+          if (server) {
+            const { countdown, teamYellow, teamPurple } = server;
 
-    const remaining = Math.max(0, this.countdown - new Date().getTime());
-    const countdownSeconds = Math.round(remaining / 1000);
+            // set up teams
+            this.teamYellow = teamYellow;
+            this.teamPurple = teamPurple;
+
+            // run timer
+            if (this.timerInited === false) {
+              const remaining = Math.max(0, countdown - new Date().getTime());
+              const countdownSeconds = Math.round(remaining / 1000);
+              this.runCountdown(countdownSeconds);
+            }
+          }
+        });
+    } else {
+      this.router.navigate(['/servers']);
+    }
+  }
+
+  onClickJoin(team: Team): void {
+    const user = this.usersService.user;
+
+    if (user) {
+      if (team === 'yellow') {
+        this.addPlayerToTeamYellow(user.nickname);
+      } else {
+        this.addPlayerToTeamPurple(user.nickname);
+      }
+    }
+  }
+
+  trackByPlayer(index: number, serverTeam: ServerTeam): string {
+    return serverTeam.playerNickname;
+  }
+
+  private runCountdown(countdownSeconds: number): void {
+    this.timerInited = true;
 
     interval(1000)
       .pipe(
@@ -47,60 +100,84 @@ export class LobbyPage implements OnInit {
           ) {
             this.joinAutomatically();
           }
-          // this.router.navigate(['/game/battle']);
+          this.router.navigate(['/game/battle', this.serverId]);
         }
       });
   }
 
-  onClickJoin(team: Team): void {
-    const user = this.usersService.user;
-
-    if (user) {
-      if (team === 'yellow') {
-        this.addToTeamYellow(user.nickname);
-      } else {
-        this.addToTeamPurple(user.nickname);
-      }
-    }
-  }
-
-  joinAutomatically(): void {
+  private joinAutomatically(): void {
     const user = this.usersService.user;
     if (user) {
       const playersInYellow = this.teamYellow.length;
       const playersInPurple = this.teamPurple.length;
 
       if (playersInYellow < playersInPurple) {
-        this.addToTeamYellow(user.nickname);
+        this.addPlayerToTeamYellow(user.nickname);
       } else {
-        this.addToTeamPurple(user.nickname);
+        this.addPlayerToTeamPurple(user.nickname);
       }
     }
   }
 
-  trackByPlayer(index: number, nickname: string): string {
-    return nickname;
+  private addPlayerToTeamYellow(nickname: string): void {
+    if (
+      this.serverId &&
+      this.teamYellow.some((p) => p.playerNickname === nickname) === false
+    ) {
+      const order = this.teamYellow.length;
+
+      const player: ServerTeam = {
+        playerNickname: nickname,
+        clicksCount: 0,
+        totalClicks: 0,
+        ready: false,
+        order,
+      };
+
+      this.serversService
+        .update(this.serverId, player, {
+          urlPostfix: 'player/yellow',
+          method: HttpMethod.PATCH,
+          errorMsg:
+            'Ocurrió un problema al intentar unir el jugador al equipo amarillo.',
+        })
+        .subscribe((res) => {
+          this.userInTeamYellow = true;
+          this.userInTeamPurple = false;
+
+          this.usersService.patchUser({ team: 'yellow', order });
+        });
+    }
   }
 
-  private addToTeamYellow(nickname: string): void {
-    this.teamYellow.push(nickname);
-    this.userInTeamYellow = true;
-    this.userInTeamPurple = false;
-    this.teamPurple = this.teamPurple.filter((n) => n !== nickname);
-    this.usersService.patchUser({
-      team: 'yellow',
-      order: this.teamYellow.length - 1,
-    });
-  }
+  private addPlayerToTeamPurple(nickname: string): void {
+    if (
+      this.serverId &&
+      this.teamPurple.some((p) => p.playerNickname === nickname) === false
+    ) {
+      const order = this.teamPurple.length;
 
-  private addToTeamPurple(nickname: string): void {
-    this.teamPurple.push(nickname);
-    this.userInTeamPurple = true;
-    this.userInTeamYellow = false;
-    this.teamYellow = this.teamYellow.filter((n) => n !== nickname);
-    this.usersService.patchUser({
-      team: 'purple',
-      order: this.teamPurple.length - 1,
-    });
+      const player: ServerTeam = {
+        playerNickname: nickname,
+        clicksCount: 0,
+        totalClicks: 0,
+        ready: false,
+        order,
+      };
+
+      this.serversService
+        .update(this.serverId, player, {
+          urlPostfix: 'player/purple',
+          method: HttpMethod.PATCH,
+          errorMsg:
+            'Ocurrió un problema al intentar unir el jugador al equipo morado.',
+        })
+        .subscribe((res) => {
+          this.userInTeamPurple = true;
+          this.userInTeamYellow = false;
+
+          this.usersService.patchUser({ team: 'purple', order });
+        });
+    }
   }
 }
