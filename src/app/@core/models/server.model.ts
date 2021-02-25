@@ -54,7 +54,6 @@ export interface ServerTeam {
   clicksCount: number;
   totalClicks: number;
   ready: boolean;
-  order: number;
 }
 
 export type ServerStatus = 'IDLE' | 'STARTED' | 'ENDED';
