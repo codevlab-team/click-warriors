@@ -76,7 +76,6 @@ export class BattlePage implements OnInit, OnDestroy {
                   this.updateYellowLife(server);
                   this.updatePurpleLife(server);
                 }
-
                 break;
               case 'ENDED':
                 this.endMatch(server.winner);
