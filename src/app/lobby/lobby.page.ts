@@ -100,8 +100,9 @@ export class LobbyPage implements OnInit {
             this.userInTeamPurple === false
           ) {
             this.joinAutomatically();
+          } else {
+            this.router.navigate(['/game/battle', this.serverId]);
           }
-          this.router.navigate(['/game/battle', this.serverId]);
         }
       });
   }
@@ -146,6 +147,7 @@ export class LobbyPage implements OnInit {
           this.userInTeamPurple = false;
           this.usersService.patchUser({ team: 'yellow' });
           this.loaderVisible = false;
+          this.router.navigate(['/game/battle', this.serverId]);
         });
     }
   }
@@ -176,6 +178,7 @@ export class LobbyPage implements OnInit {
           this.userInTeamYellow = false;
           this.usersService.patchUser({ team: 'purple' });
           this.loaderVisible = false;
+          this.router.navigate(['/game/battle', this.serverId]);
         });
     }
   }
