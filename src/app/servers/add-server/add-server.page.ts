@@ -219,7 +219,6 @@ export class AddServerPage implements OnInit {
         })
         .subscribe(
           (res) => {
-            console.log(res);
             this.loaderVisible = false;
             this.router.navigate(['/servers']);
           },

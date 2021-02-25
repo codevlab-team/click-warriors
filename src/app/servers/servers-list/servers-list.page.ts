@@ -22,7 +22,6 @@ export class ServersListPage implements OnInit {
       .collection<Server>('Servers')
       .valueChanges()
       .subscribe((servers) => {
-        console.log(servers);
         this.servers = servers;
         this.loading = false;
       });
