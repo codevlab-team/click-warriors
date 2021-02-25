@@ -61,7 +61,7 @@ export class LobbyPage implements OnInit {
           }
         });
     } else {
-      this.router.navigate(['/servers']);
+      // this.router.navigate(['/servers']);
     }
   }
 

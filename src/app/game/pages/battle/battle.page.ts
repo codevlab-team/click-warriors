@@ -69,8 +69,14 @@ export class BattlePage implements OnInit, OnDestroy {
 
                 this.everybodyJoined = true;
 
-                this.updateYellowLife(server);
-                this.updatePurpleLife(server);
+                if (server.goal) {
+                  this.goal = true;
+                  this.reset();
+                } else {
+                  this.updateYellowLife(server);
+                  this.updatePurpleLife(server);
+                }
+
                 break;
               case 'ENDED':
                 this.endMatch(server.winner);
@@ -137,14 +143,7 @@ export class BattlePage implements OnInit, OnDestroy {
       0
     );
 
-    const life = this.getLife(pointsPerRound, purpleClicks);
-
-    if (life === 0) {
-      this.goal = true;
-      this.reset();
-    } else {
-      this.yellowLife = life;
-    }
+    this.yellowLife = this.getLife(pointsPerRound, purpleClicks);
   }
 
   private updatePurpleLife(server: Server): void {
@@ -156,14 +155,8 @@ export class BattlePage implements OnInit, OnDestroy {
       (clicks, player) => (clicks += player.clicksCount),
       0
     );
-    const life = this.getLife(pointsPerRound, yellowClicks);
 
-    if (life === 0) {
-      this.goal = true;
-      this.reset();
-    } else {
-      this.purpleLife = life;
-    }
+    this.purpleLife = this.getLife(pointsPerRound, yellowClicks);
   }
 
   private getLife(pointsPerRound: number, clicks: number): number {
