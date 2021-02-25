@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { interval } from 'rxjs';
@@ -12,7 +12,7 @@ import { UsersService } from '../@core/services/users/users.service';
   templateUrl: './lobby.page.html',
   styleUrls: ['./lobby.page.scss'],
 })
-export class LobbyPage implements OnInit {
+export class LobbyPage implements OnInit, OnDestroy {
   teamYellow: ServerTeam[] = [];
   teamPurple: ServerTeam[] = [];
 
@@ -36,9 +36,11 @@ export class LobbyPage implements OnInit {
       (paramMap) => (this.serverId = paramMap.get('serverId'))
     );
   }
+  ngOnDestroy(): void {
+    console.log('test');
+  }
 
   ngOnInit(): void {
-    console.log('server', this.serverId);
     if (this.serverId) {
       this.db
         .collection<Server>('Servers')
@@ -93,7 +95,7 @@ export class LobbyPage implements OnInit {
         const minutes = Math.floor(value / 60);
         const seconds = value - minutes * 60;
         this.displayTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-        console.log(value);
+
         if (value === 0) {
           if (
             this.userInTeamYellow === false &&

@@ -54,14 +54,12 @@ export class BattlePage implements OnInit, OnDestroy {
         .valueChanges()
         .subscribe((server) => {
           if (server) {
-            console.log(server.status);
             switch (server.status) {
               case 'IDLE':
                 this.everybodyJoined = false;
                 this.markAsReady();
                 break;
               case 'STARTED':
-                console.log(this.everybodyJoined);
                 if (this.everybodyJoined === false) {
                   this.countdown = 5;
                   this.runCountdown();
@@ -105,7 +103,7 @@ export class BattlePage implements OnInit, OnDestroy {
             method: HttpMethod.PATCH,
           }
         )
-        .subscribe(console.log);
+        .subscribe();
     }
   }
 
@@ -122,7 +120,7 @@ export class BattlePage implements OnInit, OnDestroy {
             method: HttpMethod.PATCH,
           }
         )
-        .subscribe(console.log);
+        .subscribe();
     }
   }
 
@@ -182,7 +180,7 @@ export class BattlePage implements OnInit, OnDestroy {
             method: HttpMethod.PATCH,
           }
         )
-        .subscribe(console.log);
+        .subscribe();
     }
   }
 
