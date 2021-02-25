@@ -9,6 +9,7 @@ export interface Server {
   scorePurple: number;
   teamYellow: ServerTeam[];
   teamPurple: ServerTeam[];
+  goal: Team | null;
   winner: Team;
 }
 

@@ -38,6 +38,7 @@ export class LobbyPage implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('server', this.serverId);
     if (this.serverId) {
       this.db
         .collection<Server>('Servers')
