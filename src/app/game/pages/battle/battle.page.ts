@@ -195,16 +195,15 @@ export class BattlePage implements OnInit, OnDestroy {
   }
 
   private endMatch(winner: Team): void {
-    setTimeout(() => {
-      this.goal = false;
-      this.winner = winner;
-      this.usersService.patchUser({
-        team: null,
-      });
+    this.countdown = 0;
+    this.goal = false;
+    this.winner = winner;
+    this.usersService.patchUser({
+      team: null,
+    });
 
-      setTimeout(() => {
-        this.router.navigate(['/']);
-      }, this.stageEager);
+    setTimeout(() => {
+      this.router.navigate(['/']);
     }, this.stageEager);
   }
 }
