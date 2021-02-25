@@ -124,14 +124,13 @@ export class LobbyPage implements OnInit {
       this.serverId &&
       this.teamYellow.some((p) => p.playerNickname === nickname) === false
     ) {
-      const order = this.teamYellow.length;
+      this.loaderVisible = true;
 
       const player: ServerTeam = {
         playerNickname: nickname,
         clicksCount: 0,
         totalClicks: 0,
         ready: false,
-        order,
       };
 
       this.serversService
@@ -144,8 +143,8 @@ export class LobbyPage implements OnInit {
         .subscribe((res) => {
           this.userInTeamYellow = true;
           this.userInTeamPurple = false;
-
-          this.usersService.patchUser({ team: 'yellow', order });
+          this.usersService.patchUser({ team: 'yellow' });
+          this.loaderVisible = false;
         });
     }
   }
@@ -155,14 +154,13 @@ export class LobbyPage implements OnInit {
       this.serverId &&
       this.teamPurple.some((p) => p.playerNickname === nickname) === false
     ) {
-      const order = this.teamPurple.length;
+      this.loaderVisible = true;
 
       const player: ServerTeam = {
         playerNickname: nickname,
         clicksCount: 0,
         totalClicks: 0,
         ready: false,
-        order,
       };
 
       this.serversService
@@ -175,8 +173,8 @@ export class LobbyPage implements OnInit {
         .subscribe((res) => {
           this.userInTeamPurple = true;
           this.userInTeamYellow = false;
-
-          this.usersService.patchUser({ team: 'purple', order });
+          this.usersService.patchUser({ team: 'purple' });
+          this.loaderVisible = false;
         });
     }
   }

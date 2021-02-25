@@ -94,7 +94,7 @@ export class BattlePage implements OnInit, OnDestroy {
       this.serversService
         .update(
           this.serverId,
-          { order: user.order },
+          { playerNickname: user.nickname },
           {
             urlPostfix: 'player/yellow/click',
             method: HttpMethod.PATCH,
@@ -111,7 +111,7 @@ export class BattlePage implements OnInit, OnDestroy {
       this.serversService
         .update(
           this.serverId,
-          { order: user.order },
+          { playerNickname: user.nickname },
           {
             urlPostfix: 'player/purple/click',
             method: HttpMethod.PATCH,
@@ -180,11 +180,11 @@ export class BattlePage implements OnInit, OnDestroy {
   private markAsReady(): void {
     const user = this.usersService?.user;
     if (this.serverId && user) {
-      const { order, team } = user;
+      const { nickname, team } = user;
       this.serversService
         .update(
           this.serverId,
-          { order },
+          { playerNickname: nickname },
           {
             urlPostfix: `player/${team}/ready`,
             method: HttpMethod.PATCH,
@@ -210,7 +210,6 @@ export class BattlePage implements OnInit, OnDestroy {
       this.winner = winner;
       this.usersService.patchUser({
         team: null,
-        order: null,
       });
 
       setTimeout(() => {
