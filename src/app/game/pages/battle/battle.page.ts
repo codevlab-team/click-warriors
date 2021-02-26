@@ -53,33 +53,31 @@ export class BattlePage implements OnInit, OnDestroy {
         .doc(this.serverId)
         .valueChanges()
         .subscribe((server) => {
-          if (server) {
-            switch (server.status) {
-              case 'IDLE':
-                this.everybodyJoined = false;
-                this.markAsReady();
-                break;
-              case 'STARTED':
-                if (this.everybodyJoined === false) {
-                  this.countdown = 5;
-                  this.runCountdown();
-                }
-
-                this.everybodyJoined = true;
-
-                if (server.goal) {
-                  this.goal = true;
-                  this.reset();
-                } else {
-                  this.updateYellowLife(server);
-                  this.updatePurpleLife(server);
-                }
-                break;
-              case 'ENDED':
-                this.endMatch(server.winner);
-                break;
-            }
-          }
+          // if (server) {
+          //   switch (server.status) {
+          //     case 'IDLE':
+          //       this.everybodyJoined = false;
+          //       this.markAsReady();
+          //       break;
+          //     case 'STARTED':
+          //       if (this.everybodyJoined === false) {
+          //         this.countdown = 5;
+          //         this.runCountdown();
+          //       }
+          //       this.everybodyJoined = true;
+          //       if (server.goal) {
+          //         this.goal = true;
+          //         this.reset();
+          //       } else {
+          //         this.updateYellowLife(server);
+          //         this.updatePurpleLife(server);
+          //       }
+          //       break;
+          //     case 'ENDED':
+          //       this.endMatch(server.winner);
+          //       break;
+          //   }
+          // }
         });
     } else {
       this.router.navigate(['/servers']);

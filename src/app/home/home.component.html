@@ -11,10 +11,7 @@
       Deporte y convivencia
     </a>
 
-    <div
-      class="grid w-full h-full place-items-center"
-      [ngClass]="{ shield: !submittedOrPatched }"
-    >
+    <div class="grid w-full h-full place-items-center">
       <div
         class="flex flex-col items-center justify-center"
         *ngIf="submittedOrPatched && nickname; else createUser"
@@ -24,12 +21,12 @@
           class="w-16 h-16 mb-6"
         />
 
-        <p class="text-2xl">👋 Hola, {{ nickname }}</p>
+        <p class="text-2xl text-center">👋 Hola, {{ nickname }}</p>
       </div>
 
       <ng-template #createUser>
-        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="mb-36">
-          <div class="relative flex">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <div class="relative flex flex-wrap justify-center">
             <input
               type="text"
               placeholder="Ingrese su nombre"
